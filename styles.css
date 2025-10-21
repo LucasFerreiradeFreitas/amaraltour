@@ -1,0 +1,758 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Paleta de cores atualizada para Mostarda e Marrom */
+  --color-primary: #d4af37; /* Amarelo Mostarda */
+  --color-primary-dark: #b8860b; /* Mostarda Escuro */
+  --color-secondary: #8b4513; /* Marrom */
+  --color-accent: #d4af37; /* Usando mostarda como acento também */
+  --color-background: #ffffff;
+  --color-surface: #fcfbf8; /* Um fundo levemente amarelado/creme */
+  --color-text: #4a2c0f; /* Marrom Escuro para texto */
+  --color-text-light: #6e5c4c; /* Marrom Claro para subtextos */
+  --color-border: #e2e8f0;
+  --color-success: #10b981;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-2xl: 4rem;
+  --radius: 0.75rem;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-background);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* Header */
+.header {
+  background-color: var(--color-background);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md) 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.logo svg {
+  color: var(--color-primary);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.nav a {
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav a:hover {
+  color: var(--color-primary);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white !important;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius);
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.mobile-menu-btn {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-xs);
+}
+
+.mobile-menu-btn span {
+  width: 24px;
+  height: 2px;
+  background-color: var(--color-text);
+  transition: all 0.3s;
+}
+
+.mobile-menu-btn.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.mobile-menu-btn.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-btn.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Hero Section */
+.hero {
+  /* Gradiente atualizado de Mostarda para Marrom */
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-secondary) 100%
+  );
+  color: white;
+  padding: var(--spacing-2xl) 0;
+}
+
+.hero-content {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: var(--spacing-md);
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: var(--spacing-lg);
+  opacity: 0.95;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-hero {
+  display: inline-block;
+  background-color: white;
+  color: var(--color-secondary); /* Cor do botão aponta para o marrom */
+  padding: var(--spacing-md) var(--spacing-xl);
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.125rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-hero:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl);
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.stat {
+  text-align: center;
+  padding: var(--spacing-md);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  backdrop-filter: blur(10px);
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: var(--spacing-xs);
+}
+
+.stat-label {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* Trips Section */
+.trips {
+  padding: var(--spacing-2xl) 0;
+  background-color: var(--color-surface);
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text);
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--color-text-light);
+  font-size: 1.125rem;
+  margin-bottom: var(--spacing-xl);
+}
+
+.trips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.trip-card {
+  background-color: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s, box-shadow 0.3s;
+  /* Faz o card usar flex-direction para empurrar o botão para baixo */
+  display: flex;
+  flex-direction: column;
+}
+
+.trip-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.trip-image {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+}
+
+.trip-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.trip-badge {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  background-color: var(--color-success);
+  color: white;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.trip-content {
+  padding: var(--spacing-lg);
+  /* Faz o conteúdo crescer para preencher o espaço */
+  flex-grow: 1;
+  /* Adicionado para espaçar o botão */
+  display: flex;
+  flex-direction: column;
+}
+
+.trip-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text);
+}
+
+.trip-date {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-md);
+  font-size: 0.875rem;
+}
+
+.trip-date svg {
+  color: var(--color-primary);
+}
+
+.trip-description {
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.6;
+  /* Faz a descrição preencher o espaço disponível */
+  flex-grow: 1;
+}
+
+/* Estilo para o novo botão "Saiba Mais" */
+.btn-saiba-mais {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  background-color: var(--color-primary);
+  color: white;
+  padding: var(--spacing-md);
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  text-decoration: none;
+  margin-top: auto; /* Empurra o botão para o final do .trip-content */
+}
+
+.btn-saiba-mais:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-saiba-mais:active {
+  transform: scale(0.98);
+}
+
+/* Footer */
+.footer {
+  background-color: var(--color-text); /* Footer com fundo marrom escuro */
+  color: white;
+  padding: var(--spacing-2xl) 0 var(--spacing-lg);
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+}
+
+.footer-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-primary); /* Título do footer em mostarda */
+}
+
+.footer-subtitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+}
+
+.footer-text {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: var(--color-primary); /* Links do footer em mostarda no hover */
+}
+
+.footer-links li {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.social-links {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.social-links a {
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.3s, transform 0.3s;
+}
+
+.social-links a:hover {
+  color: var(--color-primary); /* Links sociais em mostarda no hover */
+  transform: translateY(-2px);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-lg);
+    display: none;
+  }
+
+  .nav.active {
+    display: flex;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .trips-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.75rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+
+  .trip-title {
+    font-size: 1.25rem;
+  }
+}
+
+/* ============================================== */
+/* === Estilos para a Página de Detalhe da Viagem === */
+/* === ADICIONE ISSO AO FINAL DO SEU styles.css === */
+/* ============================================== */
+
+.trip-detail-page {
+  padding: var(--spacing-2xl) 0;
+  background-color: var(--color-surface); /* Fundo creme/levemente amarelado */
+}
+
+.trip-detail-header {
+  margin-bottom: var(--spacing-xl);
+}
+
+.trip-detail-header img {
+  width: 100%;
+  height: 400px; /* Altura maior para a imagem de destaque */
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+}
+
+.trip-detail-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-text); /* Texto marrom escuro */
+  margin-top: var(--spacing-lg);
+  text-align: center;
+}
+
+.trip-detail-content .intro {
+  font-size: 1.25rem;
+  text-align: center;
+  color: var(--color-text-light); /* Texto marrom claro */
+  max-width: 800px;
+  margin: 0 auto var(--spacing-xl);
+}
+
+.trip-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.info-card {
+  background-color: white;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  border-left: 5px solid var(--color-primary); /* Destaque mostarda */
+}
+
+.info-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text);
+}
+
+.info-card p,
+.info-card li {
+  color: var(--color-text-light);
+  line-height: 1.7;
+}
+
+.info-card ul {
+  list-style-position: inside;
+  padding-left: 0;
+  list-style-type: none; /* Removemos os marcadores padrão */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.info-card strong {
+  display: block;
+  margin-top: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text);
+}
+
+.packages-section {
+  margin-bottom: var(--spacing-xl);
+  padding-top: var(--spacing-lg); /* Espaço para o link de âncora #pacotes */
+}
+
+.packages-section h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.package-card {
+  background-color: white;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--spacing-lg);
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s;
+}
+
+.package-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.package-card.package-popular {
+  border-color: var(--color-primary); /* Borda mostarda para o popular */
+  position: relative;
+}
+
+/* Criamos a faixa "Mais Popular" com CSS */
+.package-card.package-popular::before {
+  content: "Mais Popular";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-primary); /* Fundo mostarda */
+  color: white;
+  padding: 4px var(--spacing-sm);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.package-card .package-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.package-card h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--spacing-xs);
+}
+
+.package-card .package-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary); /* Preço em mostarda */
+  margin-bottom: var(--spacing-md);
+}
+
+.package-card ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  text-align: left;
+}
+
+.package-card ul li {
+  color: var(--color-text-light);
+}
+
+.payment-section {
+  background-color: white;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.payment-section h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text);
+}
+
+.payment-section ul {
+  list-style: none;
+  margin-bottom: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.payment-section li {
+  color: var(--color-text-light);
+}
+
+.btn-reserve-detail {
+  display: inline-block;
+  background-color: var(--color-secondary); /* Botão de reserva em marrom */
+  color: white;
+  padding: var(--spacing-md) var(--spacing-2xl);
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.125rem;
+  transition: transform 0.3s, background-color 0.3s;
+  box-shadow: var(--shadow-lg);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-reserve-detail:hover {
+  background-color: #6a360f; /* Marrom mais escuro no hover */
+  transform: translateY(-2px);
+}
+
+/* Ajuste responsivo para a imagem do header */
+@media (max-width: 768px) {
+  .trip-detail-header img {
+    height: 300px;
+  }
+  .trip-detail-header h1 {
+    font-size: 2rem;
+  }
+}
+
+/* ============================================== */
+/* === Estilos Adicionais (Página Rio)      === */
+/* === ADICIONE ISSO AO FINAL DO SEU styles.css === */
+/* ============================================== */
+
+.tours-section {
+  background-color: white;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.tours-section h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-text);
+}
+
+.tours-list {
+  list-style-type: decimal; /* 1, 2, 3... */
+  list-style-position: outside;
+  margin: 0;
+  padding-left: var(--spacing-lg); /* Ajuste no padding */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.tours-list li {
+  color: var(--color-text-light);
+  line-height: 1.6;
+  padding-left: var(--spacing-xs);
+}
+
+.tours-list li strong {
+  color: var(--color-text);
+  font-weight: 700;
+  display: block; /* Faz o título ficar na linha de cima */
+  margin-bottom: 4px;
+}
+
+/* Estilo para o card de aviso */
+.info-card.warning {
+  border-left-color: #f59e0b; /* Um tom de aviso (laranja/amarelo) */
+  background-color: #fffbeb; /* Fundo amarelo bem claro */
+}
+
+/* Estilo para o <p> dentro da seção de pagamento */
+.payment-section p {
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-lg);
+  font-size: 1.125rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
