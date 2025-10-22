@@ -756,3 +756,106 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+
+/* ============================================== */
+/* === Estilos ATUALIZADOS para Tabelas de Preço === */
+/* ============================================== */
+
+/* Wrapper para permitir rolagem horizontal em telas pequenas */
+.table-wrapper {
+  overflow-x: auto; /* Mantém a rolagem horizontal */
+  margin-bottom: var(--spacing-lg);
+  border-radius: var(--radius); /* Bordas arredondadas */
+  border: 1px solid var(--color-border); /* Borda sutil */
+  box-shadow: var(--shadow-sm); /* Sombra leve */
+}
+
+.payment-table {
+  width: 100%;
+  min-width: 600px; /* Força a rolagem em telas menores, ajuste se necessário */
+  border-collapse: collapse; /* Remove espaços entre células */
+  background-color: white; /* Fundo branco para a tabela */
+}
+
+.payment-table th,
+.payment-table td {
+  padding: var(--spacing-sm); /* Espaçamento interno das células */
+  border: 1px solid var(--color-border); /* Linhas de divisão sutis */
+  text-align: left; /* Alinhamento padrão à esquerda */
+  vertical-align: middle; /* Alinhamento vertical centralizado */
+  color: var(--color-text-light); /* Cor de texto padrão (marrom claro) */
+}
+
+/* Cabeçalho da Tabela */
+.payment-table thead th {
+  background-color: var(--color-surface); /* Fundo creme/levemente amarelado */
+  font-size: 0.875rem;
+  font-weight: 700; /* Mais forte */
+  color: var(--color-text); /* Texto marrom escuro */
+  white-space: nowrap; /* Evita quebra de linha no cabeçalho */
+  text-align: center; /* Centraliza cabeçalhos */
+  border-bottom: 2px solid var(--color-primary); /* Linha mostarda abaixo do cabeçalho */
+}
+
+/* Corpo da Tabela */
+.payment-table tbody tr:nth-child(even) {
+  background-color: var(
+    --color-surface
+  ); /* Listras sutis para melhor leitura */
+}
+
+.payment-table tbody tr:hover {
+  background-color: rgba(
+    212,
+    175,
+    55,
+    0.1
+  ); /* Hover mostarda bem claro (cor --color-primary com transparência) */
+}
+
+/* Primeira coluna do corpo (descrição) */
+.payment-table tbody td:first-child {
+  font-weight: 600;
+  color: var(--color-text); /* Marrom escuro */
+}
+
+/* Colunas de preço no corpo */
+.payment-table tbody td:nth-child(n + 3) {
+  /* Começando da terceira coluna */
+  text-align: center; /* Centraliza valores */
+  font-weight: 500;
+}
+
+/* Rodapé da Tabela */
+.payment-table tfoot {
+  background-color: var(--color-surface);
+  font-weight: 700;
+  color: var(--color-text);
+  border-top: 2px solid var(--color-primary); /* Linha mostarda acima do rodapé */
+}
+
+/* Célula "TOTAL" no rodapé */
+.payment-table tfoot td[colspan="2"] {
+  text-align: right;
+  padding-right: var(--spacing-md);
+}
+
+/* Colunas de preço total no rodapé */
+.payment-table tfoot td:not(:first-child) {
+  color: var(--color-secondary); /* Usa o marrom secundário para os totais */
+  font-size: 1.1em; /* Destaca um pouco o total */
+  text-align: center; /* Centraliza totais */
+}
+
+/* Ajuste para tabelas mais simples (menos colunas) */
+.payment-table[style*="min-width: 300px"] td:nth-child(n + 2),
+.payment-table[style*="min-width: 500px"] td:nth-child(n + 2) {
+  text-align: center;
+  font-weight: 700;
+  color: var(--color-primary-dark); /* Mostarda escuro para valores */
+}
+
+.payment-table[style*="min-width: 300px"] tfoot td:not(:first-child),
+.payment-table[style*="min-width: 500px"] tfoot td:not(:first-child) {
+  color: var(--color-secondary); /* Marrom secundário para totais */
+}
