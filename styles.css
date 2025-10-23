@@ -170,6 +170,25 @@ body {
   margin-right: auto;
 }
 
+/* Estilo para o Slogan no Hero Section */
+.hero-slogan {
+  font-size: 2.1rem; /* Um pouco menor que o subtítulo */
+  font-style: italic; /* Opcional: para dar um toque diferente */
+  margin-top: calc(
+    var(--spacing-lg) * -0.5
+  ); /* Aproxima um pouco do subtítulo */
+  margin-bottom: var(--spacing-lg); /* Espaço antes do botão */
+  opacity: 0.9; /* Levemente mais sutil que o subtítulo */
+  font-weight: 500;
+}
+
+/* Ajuste responsivo opcional */
+@media (max-width: 768px) {
+  .hero-slogan {
+    font-size: 1rem;
+  }
+}
+
 .btn-hero {
   display: inline-block;
   background-color: white;
