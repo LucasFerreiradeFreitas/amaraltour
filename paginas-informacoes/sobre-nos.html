@@ -4,16 +4,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trilha em Cortês - PE - Amaraltour</title>
+  <title>Sobre Nós - Amaraltour</title>
   <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .about-page {
+      padding: var(--spacing-2xl) 0;
+      background-color: var(--color-surface);
+    }
+
+    .about-content {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: var(--spacing-xl);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      /* Centraliza o texto no card */
+    }
+
+    .about-content h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--color-text);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .about-content p {
+      color: var(--color-text-light);
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .about-content .quote {
+      font-size: 1.25rem;
+      font-style: italic;
+      font-weight: 600;
+      color: var(--color-secondary);
+      /* Cor marrom para a citação */
+      margin-top: var(--spacing-lg);
+      padding-top: var(--spacing-lg);
+      border-top: 1px solid var(--color-border);
+    }
+  </style>
 </head>
 
 <body>
   <header class="header">
     <div class="container">
       <div class="header-content">
-        <a href="../index.html" class="logo">
-          <img src="../imgs/logo.png" alt="Amaraltour Logo" width="150">
+        <a href="../index.html" class="logo"> <img src="../imgs/logo.png" alt="Amaraltour Logo" width="150" />
         </a>
 
         <button class="mobile-menu-btn" id="mobileMenuBtn">
@@ -24,76 +65,40 @@
 
         <nav class="nav" id="mainNav">
           <a href="../index.html">Início</a>
-          <a href="../index.html#viagens">Viagens</a>
-          <a href="sobre-nos.html">Sobre Nós</a>
+          <a href="../index.html#viagens">Viagens</a> 
+          <a href="sobre-nos.html">Sobre Nós</a> 
           <a href="https://api.whatsapp.com/message/HPJY6DESPZNBH1" target="_blank" class="btn-primary">Reserve Agora</a>
         </nav>
       </div>
     </div>
   </header>
 
-  <main class="trip-detail-page">
+  <main class="about-page">
     <div class="container">
-      <div class="trip-detail-header">
-        <img src="../imgs/cortes.jpg" alt="Trilha e Cachoeira em Cortês, PE" />
-        <h1>Trilha com Emoção em Cortês - PE 🌿</h1>
-      </div>
-
-      <div class="trip-detail-content">
-        <p class="intro">
-          Vem viver um dia incrível na natureza com a Amaraltour! Trilha,
-          cachoeiras, almoço e muitas memórias boas! 💚
+      <div class="about-content">
+        <h1>Sobre a Amaraltour</h1>
+        <p>
+          A Amaraltour é uma agência especializada em passeios, viagens bate e
+          volta e excursões completas, com foco em oferecer conforto,
+          segurança e diversão para quem ama viajar em grupo.
         </p>
-
-        <div class="trip-info-grid">
-          <div class="info-card">
-            <h3>📍 Roteiro inclui:</h3>
-            <ul>
-              <li>🚐 Transporte executivo</li>
-              <li>🛡 Seguro passageiro</li>
-              <li>👣 Trilha ecológica</li>
-              <li>💦 Cachoeiras</li>
-              <li>🍽 Almoço incluso</li>
-              <li>🗣 Guias (local + Amaraltour)</li>
-            </ul>
-          </div>
-
-          <div class="info-card">
-            <h3>📆 Data e Horários</h3>
-            <p><strong>Data:</strong> 9 de Novembro</p>
-            <p><strong>⏱ Retorno:</strong> 16h</p>
-
-            <strong>🕔 Saída:</strong>
-            <ul>
-              <li>Jd. São Paulo – 5h30</li>
-              <li>Totó – 5h35</li>
-              <li>Derby – 6h20</li>
-              <li>Prazeres – 6h45</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="payment-section" id="reservar">
-          <h2>💰 Valor: R$130,00</h2>
-
-          <h3>📌 Formas de pagamento</h3>
-          <ul>
-            <li>💳 Cartão em até 12x (com juros)</li>
-            <li>📲 PIX em até 3x (sem juros)</li>
-          </ul>
-
-          <p style="margin-top: var(--spacing-lg)">
-            📞 Reservas: (81) 98563-0102
-          </p>
-
-          <a href="https://api.whatsapp.com/message/HPJY6DESPZNBH1" target="_blank" class="btn-reserve-detail">Reservar Agora</a>
-
-          <p style="margin-top: var(--spacing-lg)">
-            🌿 Natureza, aventura e boas energias te esperam! Vem com a gente!
-            💚
-          </p>
-          <p>📸 Prepare o celular: vai ter muita foto linda!</p>
-        </div>
+        <p>
+          Fundada em Recife- Pernambuco, a Amaraltour nasceu do desejo de
+          transformar cada viagem em uma experiência única, conectando
+          pessoas e lugares de forma leve e acolhedora.
+        </p>
+        <p>
+          Com roteiros cuidadosamente planejados, nossos pacotes incluem
+          transporte executivo, hospedagem de qualidade, guias atenciosos e
+          roteiros autênticos que valorizam a cultura e a beleza natural de
+          cada destino.
+        </p>
+        <p>
+          Do litoral de Maragogi e Pipa às serras de Triunfo e Garanhuns, a
+          Amaraltour leva você para viver momentos incríveis com quem ama
+          viajar.
+        </p>
+        <p class="quote">“Mais do que viagens, criamos memórias.”</p>
       </div>
     </div>
   </main>
@@ -136,7 +141,7 @@
           <div class="social-links">
             <a href="https://www.instagram.com/amaraltour/" target="_blank" aria-label="Instagram">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0 3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
               </svg>
             </a>
             <a href="https://api.whatsapp.com/message/HPJY6DESPZNBH1" target="_blank" aria-label="WhatsApp">
@@ -154,7 +159,7 @@
     </div>
   </footer>
 
-  <script src="../script.js"></script>
+  <script src="script.js"></script>
 </body>
 
 </html>

@@ -90,6 +90,7 @@ body {
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s;
+  font-size: 1.3rem;
 }
 
 .nav a:hover {
@@ -237,7 +238,7 @@ body {
 /* Trips Section */
 .trips {
   padding: var(--spacing-2xl) 0;
-  background-color: var(--color-surface);
+  background-color: #f0e5bd;
 }
 
 .section-title {
@@ -250,7 +251,7 @@ body {
 
 .section-subtitle {
   text-align: center;
-  color: var(--color-text-light);
+  color: var(--color-text);
   font-size: 1.125rem;
   margin-bottom: var(--spacing-xl);
 }
@@ -503,7 +504,7 @@ body {
 
 .trip-detail-page {
   padding: var(--spacing-2xl) 0;
-  background-color: var(--color-surface); /* Fundo creme/levemente amarelado */
+  background-color: #f0e5bd; /* Fundo creme/levemente amarelado */
 }
 
 .trip-detail-header {
@@ -529,7 +530,7 @@ body {
 .trip-detail-content .intro {
   font-size: 1.25rem;
   text-align: center;
-  color: var(--color-text-light); /* Texto marrom claro */
+  color: var(--color-text); /* Texto marrom claro */
   max-width: 800px;
   margin: 0 auto var(--spacing-xl);
 }
