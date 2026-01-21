@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalhes da Viagem - Amaraltour</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="../index.html" class="logo">
+          <img src="../imgs/logo.png" alt="Amaraltour Logo" width="150" />
+        </a>
+        <nav class="nav">
+          <a href="../index.html">Início</a>
+          <a href="../index.html#viagens">Viagens</a>
+          <a href="sobre-nos.html">Sobre Nós</a>
+          <a href="https://api.whatsapp.com/message/HPJY6DESPZNBH1" target="_blank" class="btn-primary">Reserve Agora</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="trip-detail-page">
+    <div class="container">
+      <div id="loading" style="text-align: center; padding: 50px;">Carregando detalhes...</div>
+
+      <div id="content" style="display: none;">
+        <div class="trip-detail-header">
+          <img id="detail-image" src="" alt="" />
+          <h1 id="detail-title"></h1>
+        </div>
+
+        <div class="trip-detail-content">
+          <p class="intro" id="detail-intro"></p>
+
+          <div class="trip-info-grid">
+            <div class="info-card">
+              <h3>🌟 O que está incluso no pacote:</h3>
+              <ul id="detail-items"></ul>
+            </div>
+
+            <div class="info-card">
+              <h3>💰 Valor e Pagamento</h3>
+              <p>
+                <strong>Valor por pessoa:</strong> <span id="detail-price"></span>
+              </p>
+              <strong style="margin-top: var(--spacing-sm)">💳 Pagamento facilitado:</strong>
+              <ul id="detail-payment"></ul>
+            </div>
+          </div>
+
+          <div class="payment-section">
+            <h2>🌊 Diversão, cultura e beleza natural esperam por você!</h2>
+            <p>Garanta sua vaga e viva essa experiência única!<br /><strong>VAGAS LIMITADAS!</strong></p>
+            <a href="https://api.whatsapp.com/message/HPJY6DESPZNBH1" target="_blank" class="btn-reserve-detail">Reservar Agora no WhatsApp</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="error-state" style="display: none; text-align: center; padding: 50px;">
+        <h2>Viagem não encontrada</h2>
+        <a href="../index.html" class="btn-primary">Voltar ao Início</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p style="text-align: center;">&copy; 2025 Amaraltour. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    async function loadTripDetails() {
+      // 1. Pega o ID da URL (ex: ?id=12345)
+      const params = new URLSearchParams(window.location.search);
+      const tripId = params.get('id');
+
+      if (!tripId) {
+        showError();
+        return;
+      }
+
+      // 2. Busca os dados do Storage
+      try {
+        // Tenta pegar do window.storage (se configurado) ou localStorage
+        let trips = [];
+        const storedData = localStorage.getItem('amaraltour-trips');
+
+        if (storedData) {
+          trips = JSON.parse(storedData);
+        } else if (window.storage) {
+          // Fallback para seu sistema de storage se houver
+          const res = await window.storage.get('amaraltour-trips');
+          if (res) trips = JSON.parse(res.value);
+        }
+
+        const trip = trips.find(t => t.id === tripId);
+
+        if (trip) {
+          renderTrip(trip);
+        } else {
+          showError();
+        }
+      } catch (error) {
+        console.error(error);
+        showError();
+      }
+    }
+
+    function renderTrip(trip) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('content').style.display = 'block';
+
+      // Preencher campos simples
+      document.title = `${trip.title} - Amaraltour`;
+      document.getElementById('detail-title').innerText = trip.title;
+      document.getElementById('detail-image').src = trip.image;
+      document.getElementById('detail-price').innerText = trip.price || "Consulte-nos";
+
+      // Preencher intro (juntando data + texto longo)
+      const introHTML = `📅 ${trip.date} <br /><br /> ${trip.fullIntro || trip.description}`;
+      document.getElementById('detail-intro').innerHTML = introHTML;
+
+      // Preencher Itens Inclusos (quebrando por linha)
+      const itemsList = document.getElementById('detail-items');
+      const items = (trip.includedItems || '').split('\n');
+      items.forEach(item => {
+        if (item.trim()) {
+          const li = document.createElement('li');
+          li.textContent = item;
+          itemsList.appendChild(li);
+        }
+      });
+
+      // Preencher Pagamento (quebrando por linha)
+      const paymentList = document.getElementById('detail-payment');
+      const paymentItems = (trip.paymentInfo || '').split('\n');
+      paymentItems.forEach(item => {
+        if (item.trim()) {
+          const li = document.createElement('li');
+          li.textContent = item;
+          paymentList.appendChild(li);
+        }
+      });
+    }
+
+    function showError() {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('error-state').style.display = 'block';
+    }
+
+    loadTripDetails();
+  </script>
+</body>
+
+</html>

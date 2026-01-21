@@ -52,3 +52,83 @@ document.querySelectorAll(".trip-card").forEach((card) => {
   card.style.transition = "opacity 0.6s ease, transform 0.6s ease";
   observer.observe(card);
 });
+
+// Função para carregar viagens do storage
+async function loadTripsFromStorage() {
+  let trips = [];
+
+  try {
+    // 1. Tenta verificar se existe o storage na nuvem (Netlify/Blobs)
+    if (window.storage) {
+      const result = await window.storage.get("amaraltour-trips");
+      if (result && result.value) {
+        trips = JSON.parse(result.value);
+      }
+    }
+    // 2. Se não tiver nuvem, verifica o LocalStorage (Seu computador)
+    else {
+      const localData = localStorage.getItem("amaraltour-trips");
+      if (localData) {
+        trips = JSON.parse(localData);
+      }
+    }
+
+    // 3. Se encontrou viagens, renderiza
+    if (trips.length > 0) {
+      renderDynamicTrips(trips);
+    }
+  } catch (error) {
+    console.log(
+      "Erro ao carregar viagens ou nenhuma viagem extra encontrada:",
+      error,
+    );
+  }
+}
+
+// Função para renderizar viagens dinamicamente
+function renderDynamicTrips(trips) {
+  const tripsGrid = document.querySelector(".trips-grid");
+
+  // Adiciona as viagens do admin AO LADO das viagens estáticas
+  trips.forEach((trip) => {
+    const tripCard = createTripCard(trip);
+    tripsGrid.appendChild(tripCard);
+  });
+}
+
+// Função para criar card de viagem
+function createTripCard(trip) {
+  const card = document.createElement("div");
+  card.className = "trip-card";
+
+  const statusColor = trip.status === "available" ? "#10b981" : "#ff3616";
+  const statusText = trip.status === "available" ? "Disponível" : "Esgotado";
+
+  card.innerHTML = `
+    <div class="trip-image">
+      <img src="${trip.image}" alt="${trip.title}" />
+      <span class="trip-badge" style="background-color: ${statusColor};">${statusText}</span>
+    </div>
+    <div class="trip-content">
+      <h3 class="trip-title">${trip.title}</h3>
+      <p class="trip-date">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        ${trip.date}
+      </p>
+      <p class="trip-description">
+        ${trip.description}
+      </p>
+      <a href="${trip.link}" class="btn-saiba-mais">Saiba Mais</a>
+    </div>
+  `;
+
+  return card;
+}
+
+// Carrega as viagens quando a página carregar
+window.addEventListener("DOMContentLoaded", loadTripsFromStorage);

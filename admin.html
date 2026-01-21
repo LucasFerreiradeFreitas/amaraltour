@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Seguro - Amaraltour</title>
+  <style>
+    /* ========================================= */
+    /* ESTILOS DE LOGIN */
+    /* ========================================= */
+    #login-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #d4af37 0%, #8b4513 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .login-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .login-box h2 {
+      color: #8b4513;
+      margin-bottom: 1.5rem;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    .login-box input:disabled {
+      background-color: #f3f4f6;
+      cursor: not-allowed;
+    }
+
+    .login-error {
+      color: #dc2626;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .login-warning {
+      color: #f59e0b;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* ========================================= */
+    /* ESTILOS DO ADMIN */
+    /* ========================================= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --color-primary: #d4af37;
+      --color-primary-dark: #b8860b;
+      --color-secondary: #8b4513;
+      --color-text: #4a2c0f;
+      --color-text-light: #6e5c4c;
+      --color-border: #e2e8f0;
+      --spacing-sm: 1rem;
+      --spacing-md: 1.5rem;
+      --spacing-lg: 2rem;
+      --radius: 0.75rem;
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      min-height: 100vh;
+    }
+
+    #admin-panel {
+      display: none;
+      padding: var(--spacing-lg);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .alert {
+      background: #fef3c7;
+      border: 2px solid #f59e0b;
+      padding: var(--spacing-md);
+      border-radius: var(--radius);
+      margin-bottom: var(--spacing-lg);
+      color: #92400e;
+    }
+
+    .alert strong {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .header {
+      background: white;
+      padding: var(--spacing-md);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      margin-bottom: var(--spacing-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header h1 {
+      color: var(--color-text);
+      font-size: 1.75rem;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.875rem;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--color-primary-dark);
+    }
+
+    .btn-secondary {
+      background: var(--color-secondary);
+      color: white;
+    }
+
+    .btn-info {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .btn-danger {
+      background: #dc2626;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #b91c1c;
+    }
+
+    .content {
+      background: white;
+      padding: var(--spacing-lg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .trips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .trip-card {
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--spacing-md);
+      position: relative;
+    }
+
+    .trip-card h3 {
+      color: var(--color-text);
+      margin-bottom: 0.5rem;
+    }
+
+    .trip-card .date {
+      color: var(--color-text-light);
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .trip-card .status {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .status.available {
+      background: #10b981;
+      color: white;
+    }
+
+    .status.sold-out {
+      background: #ef4444;
+      color: white;
+    }
+
+    .trip-card .actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: var(--spacing-sm);
+    }
+
+    .trip-card .actions button {
+      flex: 1;
+      padding: 0.5rem;
+      font-size: 0.875rem;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-lg);
+    }
+
+    .modal-content {
+      background: white;
+      padding: var(--spacing-lg);
+      border-radius: var(--radius);
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .modal-header h2 {
+      color: var(--color-text);
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--color-text-light);
+    }
+
+    .form-group {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--color-text);
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius);
+      font-family: inherit;
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .loading,
+    .empty-state {
+      text-align: center;
+      padding: var(--spacing-lg);
+      color: var(--color-text-light);
+    }
+
+    .export-data {
+      background: #f0fdf4;
+      border: 1px solid #10b981;
+      padding: var(--spacing-md);
+      border-radius: var(--radius);
+      margin-top: var(--spacing-lg);
+    }
+
+    .export-data h3 {
+      color: var(--color-text);
+      margin-bottom: 0.5rem;
+    }
+
+    .export-data textarea {
+      width: 100%;
+      min-height: 150px;
+      font-family: monospace;
+      font-size: 0.75rem;
+      padding: 0.5rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+    }
+
+    @media (max-width: 768px) {
+      .trips-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .header-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="login-screen">
+    <div class="login-box">
+      <img src="imgs/logo.png" alt="Amaraltour" width="120" style="margin-bottom: 20px;">
+      <h2>Área Restrita</h2>
+      <p style="margin-bottom: 15px; color: #666;">Digite a senha de administrador</p>
+
+      <form onsubmit="checkLogin(event)">
+        <input type="password" id="adminPassword" placeholder="Senha" required autofocus>
+        <button type="submit" class="btn btn-primary" id="loginBtn" style="width: 100%;">Entrar</button>
+        <p id="loginError" class="login-error">Senha incorreta!</p>
+        <p id="loginWarning" class="login-warning"></p>
+      </form>
+    </div>
+  </div>
+
+  <div id="admin-panel">
+    <div class="container">
+      <div id="local-alert" class="alert" style="display: none;">
+        <strong>⚠️ Modo Local Detectado</strong>
+        <p>Você está testando localmente. Os dados estão sendo salvos no navegador (localStorage).</p>
+        <p>Quando publicar no Netlify, o sistema usará armazenamento em nuvem automaticamente.</p>
+      </div>
+
+      <div class="header">
+        <h1>🌍 Painel Administrativo - Amaraltour</h1>
+        <div class="header-actions">
+          <button class="btn btn-primary" onclick="openAddModal()">+ Nova Viagem</button>
+          <button class="btn btn-info" onclick="toggleExportData()">📊 Ver Dados</button>
+          <button class="btn btn-secondary" onclick="logout()">🔒 Sair</button>
+        </div>
+      </div>
+
+      <div class="content">
+        <div id="loading" class="loading">Carregando viagens...</div>
+        <div id="trips-container" class="trips-grid" style="display: none;"></div>
+        <div id="empty-state" class="empty-state" style="display: none;">
+          <p>Nenhuma viagem cadastrada ainda.</p>
+          <p>Clique em "Nova Viagem" para adicionar a primeira!</p>
+        </div>
+
+        <div id="export-section" class="export-data" style="display: none;">
+          <h3>Dados das Viagens (JSON)</h3>
+          <p style="font-size: 0.875rem; color: var(--color-text-light); margin-bottom: 0.5rem;">
+            Use isso para backup ou para migrar dados entre ambientes.
+          </p>
+          <textarea id="export-data" readonly></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="trip-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-title">Nova Viagem</h2>
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+      </div>
+      <form id="trip-form" onsubmit="saveTrip(event)">
+        <div class="form-group">
+          <label>Título da Viagem *</label>
+          <input type="text" id="title" required placeholder="Ex: Natal Luz - Garanhuns, PE">
+        </div>
+        <div class="form-group">
+          <label>Data *</label>
+          <input type="text" id="date" required placeholder="Ex: 20 a 24 de Junho de 2026">
+        </div>
+        <div class="form-group">
+          <label>Descrição Curta (para o card da home) *</label>
+          <textarea id="description" required placeholder="Resumo curto..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Imagem da Viagem (Do computador) *</label>
+          <input type="file" id="imageInput" accept="image/*" onchange="processImage(this)">
+          <input type="hidden" id="imageBase64">
+          <div style="margin-top: 10px; border: 1px dashed #ccc; padding: 5px; text-align: center;">
+            <img id="imagePreview" src="" alt="Prévia" style="max-width: 100%; max-height: 200px; display: none;">
+            <p id="imagePlaceholder" style="color: #999; font-size: 0.8rem;">Nenhuma imagem selecionada</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Status *</label>
+          <select id="status" required>
+            <option value="available">Disponível</option>
+            <option value="sold-out">Esgotado</option>
+          </select>
+        </div>
+
+        <hr style="margin: 20px 0; border: 1px solid #eee;">
+        <h3>Detalhes da Página</h3>
+
+        <div class="form-group">
+          <label>Texto de Introdução Completo</label>
+          <textarea id="fullIntro" rows="4" placeholder="Texto que aparece no topo da página de detalhes..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Itens Inclusos (Um por linha)</label>
+          <textarea id="includedItems" rows="6" placeholder="✈️ Aéreo ida e volta&#10;🏨 Hospedagem&#10;🚌 Transfers"></textarea>
+          <small style="color: #666">Pressione ENTER para separar os itens.</small>
+        </div>
+
+        <div class="form-group">
+          <label>Preço por Pessoa</label>
+          <input type="text" id="price" placeholder="Ex: R$ 3.745,50">
+        </div>
+
+        <div class="form-group">
+          <label>Informações de Pagamento (Um por linha)</label>
+          <textarea id="paymentInfo" rows="3" placeholder="Entrada de R$ 300,00 + 10x sem juros&#10;Desconto de 10% à vista"></textarea>
+        </div>
+
+        <div style="display: flex; gap: 0.5rem; margin-top: 20px;">
+          <button type="submit" class="btn btn-primary" style="flex: 1">Salvar</button>
+          <button type="button" class="btn btn-secondary" onclick="closeModal()" style="flex: 1">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================
+    // AUTENTICAÇÃO COM NETLIFY FUNCTION
+    // ==========================================
+
+    const MAX_ATTEMPTS = 5;
+    const LOCKOUT_TIME = 15 * 60 * 1000;
+    const SESSION_TIMEOUT = 60 * 60 * 1000;
+
+    function getLoginAttempts() {
+      const data = localStorage.getItem('login_attempts');
+      if (!data) return { count: 0, lockoutUntil: null };
+      return JSON.parse(data);
+    }
+
+    function saveLoginAttempts(count, lockoutUntil = null) {
+      localStorage.setItem('login_attempts', JSON.stringify({ count, lockoutUntil }));
+    }
+
+    function isLockedOut() {
+      const attempts = getLoginAttempts();
+      if (attempts.lockoutUntil && Date.now() < attempts.lockoutUntil) {
+        return true;
+      }
+      if (attempts.lockoutUntil && Date.now() >= attempts.lockoutUntil) {
+        saveLoginAttempts(0, null);
+        return false;
+      }
+      return false;
+    }
+
+    function getLockoutTimeRemaining() {
+      const attempts = getLoginAttempts();
+      if (!attempts.lockoutUntil) return 0;
+      const remaining = attempts.lockoutUntil - Date.now();
+      return remaining > 0 ? Math.ceil(remaining / 1000 / 60) : 0;
+    }
+
+    async function checkLogin(event) {
+      event.preventDefault();
+
+      const input = document.getElementById('adminPassword');
+      const errorMsg = document.getElementById('loginError');
+      const warningMsg = document.getElementById('loginWarning');
+      const loginBtn = document.getElementById('loginBtn');
+
+      if (isLockedOut()) {
+        const minutesRemaining = getLockoutTimeRemaining();
+        errorMsg.style.display = 'none';
+        warningMsg.style.display = 'block';
+        warningMsg.textContent = `Muitas tentativas incorretas. Tente novamente em ${minutesRemaining} minuto(s).`;
+        input.disabled = true;
+        loginBtn.disabled = true;
+
+        setTimeout(() => {
+          input.disabled = false;
+          loginBtn.disabled = false;
+          warningMsg.style.display = 'none';
+          saveLoginAttempts(0, null);
+        }, getLockoutTimeRemaining() * 60 * 1000);
+
+        return;
+      }
+
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Verificando...';
+
+      try {
+        const response = await fetch('/.netlify/functions/auth', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            password: input.value
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.authenticated) {
+          saveLoginAttempts(0, null);
+
+          const sessionData = {
+            authenticated: true,
+            timestamp: Date.now()
+          };
+          sessionStorage.setItem('amaral_auth', JSON.stringify(sessionData));
+
+          showAdminPanel();
+        } else {
+          const attempts = getLoginAttempts();
+          const newAttempts = attempts.count + 1;
+
+          if (newAttempts >= MAX_ATTEMPTS) {
+            const lockoutUntil = Date.now() + LOCKOUT_TIME;
+            saveLoginAttempts(newAttempts, lockoutUntil);
+
+            errorMsg.style.display = 'none';
+            warningMsg.style.display = 'block';
+            warningMsg.textContent = `Muitas tentativas incorretas. Você foi bloqueado por 15 minutos.`;
+            input.disabled = true;
+            loginBtn.disabled = true;
+
+            setTimeout(() => {
+              input.disabled = false;
+              loginBtn.disabled = false;
+              warningMsg.style.display = 'none';
+              saveLoginAttempts(0, null);
+            }, LOCKOUT_TIME);
+          } else {
+            saveLoginAttempts(newAttempts);
+            errorMsg.style.display = 'block';
+            errorMsg.textContent = `Senha incorreta! ${MAX_ATTEMPTS - newAttempts} tentativa(s) restante(s).`;
+            warningMsg.style.display = 'none';
+          }
+
+          input.value = '';
+          loginBtn.disabled = false;
+          loginBtn.textContent = 'Entrar';
+        }
+      } catch (error) {
+        console.error('Erro na autenticação:', error);
+        errorMsg.style.display = 'block';
+        errorMsg.textContent = 'Erro ao verificar senha. Tente novamente.';
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Entrar';
+      }
+    }
+
+    function showAdminPanel() {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('admin-panel').style.display = 'block';
+      initSystem();
+      setInterval(checkSessionTimeout, 60000);
+    }
+
+    function checkSessionTimeout() {
+      const sessionData = sessionStorage.getItem('amaral_auth');
+      if (!sessionData) {
+        logout();
+        return;
+      }
+
+      const data = JSON.parse(sessionData);
+      if (Date.now() - data.timestamp > SESSION_TIMEOUT) {
+        alert('Sua sessão expirou por inatividade.');
+        logout();
+      }
+    }
+
+    function logout() {
+      sessionStorage.removeItem('amaral_auth');
+      window.location.reload();
+    }
+
+    window.addEventListener('load', () => {
+      const sessionData = sessionStorage.getItem('amaral_auth');
+
+      if (sessionData) {
+        try {
+          const data = JSON.parse(sessionData);
+          if (data.authenticated && (Date.now() - data.timestamp < SESSION_TIMEOUT)) {
+            showAdminPanel();
+          } else {
+            sessionStorage.removeItem('amaral_auth');
+          }
+        } catch (e) {
+          sessionStorage.removeItem('amaral_auth');
+        }
+      }
+
+      if (isLockedOut()) {
+        const minutesRemaining = getLockoutTimeRemaining();
+        const warningMsg = document.getElementById('loginWarning');
+        const input = document.getElementById('adminPassword');
+        const loginBtn = document.getElementById('loginBtn');
+
+        warningMsg.style.display = 'block';
+        warningMsg.textContent = `Muitas tentativas incorretas. Tente novamente em ${minutesRemaining} minuto(s).`;
+        input.disabled = true;
+        loginBtn.disabled = true;
+
+        setTimeout(() => {
+          input.disabled = false;
+          loginBtn.disabled = false;
+          warningMsg.style.display = 'none';
+          saveLoginAttempts(0, null);
+        }, getLockoutTimeRemaining() * 60 * 1000);
+      }
+    });
+
+    document.addEventListener('click', () => {
+      const sessionData = sessionStorage.getItem('amaral_auth');
+      if (sessionData) {
+        const data = JSON.parse(sessionData);
+        data.timestamp = Date.now();
+        sessionStorage.setItem('amaral_auth', JSON.stringify(data));
+      }
+    });
+
+    // ==========================================
+    // SISTEMA DO ADMIN
+    // ==========================================
+
+    let trips = [];
+    let editingId = null;
+    let isLocalEnvironment = false;
+
+    function initSystem() {
+      checkEnvironment();
+      loadTrips();
+    }
+
+    function checkEnvironment() {
+      isLocalEnvironment = window.location.hostname === 'localhost' ||
+        window.location.hostname === '127.0.0.1' ||
+        !window.storage;
+
+      if (isLocalEnvironment) {
+        document.getElementById('local-alert').style.display = 'block';
+      }
+    }
+
+    const storage = {
+      async get(key) {
+        if (window.storage && !isLocalEnvironment) {
+          try { return await window.storage.get(key); } catch (e) { return null; }
+        } else {
+          const value = localStorage.getItem(key);
+          return value ? { key, value } : null;
+        }
+      },
+      async set(key, value) {
+        if (window.storage && !isLocalEnvironment) {
+          return await window.storage.set(key, value);
+        } else {
+          localStorage.setItem(key, value);
+          return { key, value };
+        }
+      }
+    };
+
+    async function loadTrips() {
+      try {
+        const result = await storage.get('amaraltour-trips');
+        if (result && result.value) {
+          trips = JSON.parse(result.value);
+        }
+      } catch (error) {
+        trips = [];
+      }
+      renderTrips();
+    }
+
+    function renderTrips() {
+      const container = document.getElementById('trips-container');
+      const loading = document.getElementById('loading');
+      const emptyState = document.getElementById('empty-state');
+
+      loading.style.display = 'none';
+
+      if (trips.length === 0) {
+        container.style.display = 'none';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      container.style.display = 'grid';
+
+      container.innerHTML = trips.map(trip => `
+        <div class="trip-card">
+          <span class="status ${trip.status === 'available' ? 'available' : 'sold-out'}">
+            ${trip.status === 'available' ? 'Disponível' : 'Esgotado'}
+          </span>
+          <h3>${trip.title}</h3>
+          <p class="date">📅 ${trip.date}</p>
+          <div class="actions">
+            <button class="btn btn-primary" onclick="editTrip('${trip.id}')">Editar</button>
+            <button class="btn btn-danger" onclick="deleteTrip('${trip.id}')">Excluir</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openAddModal() {
+      editingId = null;
+      document.getElementById('modal-title').textContent = 'Nova Viagem';
+      document.getElementById('trip-form').reset();
+      document.getElementById('imageBase64').value = '';
+      document.getElementById('imagePreview').style.display = 'none';
+      document.getElementById('imagePlaceholder').style.display = 'block';
+      document.getElementById('trip-modal').classList.add('active');
+    }
+
+    function editTrip(id) {
+      const trip = trips.find(t => t.id === id);
+      if (!trip) return;
+
+      editingId = id;
+      document.getElementById('modal-title').textContent = 'Editar Viagem';
+      document.getElementById('title').value = trip.title;
+      document.getElementById('date').value = trip.date;
+      document.getElementById('description').value = trip.description;
+      document.getElementById('status').value = trip.status;
+
+      document.getElementById('imageBase64').value = trip.image;
+      document.getElementById('imagePreview').src = trip.image;
+      document.getElementById('imagePreview').style.display = 'block';
+      document.getElementById('imagePlaceholder').style.display = 'none';
+      document.getElementById('imageInput').value = '';
+
+      document.getElementById('fullIntro').value = trip.fullIntro || '';
+      document.getElementById('includedItems').value = trip.includedItems || '';
+      document.getElementById('price').value = trip.price || '';
+      document.getElementById('paymentInfo').value = trip.paymentInfo || '';
+
+      document.getElementById('trip-modal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('trip-modal').classList.remove('active');
+      editingId = null;
+    }
+
+    function processImage(input) {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const img = new Image();
+          img.onload = function () {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const maxWidth = 1920;
+            let width = img.width;
+            let height = img.height;
+            if (width > maxWidth) {
+              height = Math.round(height * (maxWidth / width));
+              width = maxWidth;
+            }
+            canvas.width = width;
+            canvas.height = height;
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+            document.getElementById('imageBase64').value = dataUrl;
+            document.getElementById('imagePreview').src = dataUrl;
+            document.getElementById('imagePreview').style.display = 'block';
+            document.getElementById('imagePlaceholder').style.display = 'none';
+          }
+          img.src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+      }
+    }
+
+    async function saveTrip(event) {
+      event.preventDefault();
+      const imageValue = document.getElementById('imageBase64').value;
+
+      if (!imageValue) {
+        alert("Por favor, selecione uma imagem para a viagem.");
+        return;
+      }
+
+      const tripData = {
+        id: editingId || Date.now().toString(),
+        title: document.getElementById('title').value,
+        date: document.getElementById('date').value,
+        description: document.getElementById('description').value,
+        image: imageValue,
+        status: document.getElementById('status').value,
+        fullIntro: document.getElementById('fullIntro').value,
+        includedItems: document.getElementById('includedItems').value,
+        price: document.getElementById('price').value,
+        paymentInfo: document.getElementById('paymentInfo').value,
+        link: `paginas-informacoes/detalhes-viagem.html?id=${editingId || Date.now().toString()}`
+      };
+
+      if (editingId) {
+        const index = trips.findIndex(t => t.id === editingId);
+        trips[index] = tripData;
+      } else {
+        trips.push(tripData);
+      }
+
+      try {
+        await storage.set('amaraltour-trips', JSON.stringify(trips));
+        alert('Viagem salva com sucesso!');
+        closeModal();
+        renderTrips();
+      } catch (error) {
+        if (error.name === 'QuotaExceededError' || error.message.includes('quota')) {
+          alert('Erro: Armazenamento cheio. Exclua viagens antigas.');
+        } else {
+          alert('Erro ao salvar: ' + error.message);
+        }
+      }
+    }
+
+    async function deleteTrip(id) {
+      if (!confirm('Tem certeza que deseja excluir esta viagem?')) return;
+      trips = trips.filter(t => t.id !== id);
+      try {
+        await storage.set('amaraltour-trips', JSON.stringify(trips));
+        alert('Viagem excluída!');
+        renderTrips();
+      } catch (error) {
+        alert('Erro ao excluir: ' + error.message);
+      }
+    }
+
+    function toggleExportData() {
+      const section = document.getElementById('export-section');
+      const textarea = document.getElementById('export-data');
+      if (section.style.display === 'none') {
+        section.style.display = 'block';
+        textarea.value = JSON.stringify(trips, null, 2);
+      } else {
+        section.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+
+</html>
