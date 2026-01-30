@@ -4,18 +4,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Seguro - Amaraltour</title>
+  <title>Admin - Amaraltour</title>
   <style>
-    /* ========================================= */
-    /* ESTILOS DE LOGIN */
-    /* ========================================= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --color-primary: #d4af37;
+      --color-primary-dark: #b8860b;
+      --color-secondary: #8b4513;
+      --color-text: #4a2c0f;
+      --color-border: #e2e8f0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      min-height: 100vh;
+    }
+
+    /* LOGIN */
     #login-screen {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #d4af37 0%, #8b4513 100%);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -33,21 +50,47 @@
     }
 
     .login-box h2 {
-      color: #8b4513;
+      color: var(--color-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .login-box p {
+      color: #666;
+      font-size: 0.875rem;
       margin-bottom: 1.5rem;
     }
 
     .login-box input {
       width: 100%;
       padding: 0.75rem;
-      border: 2px solid #e2e8f0;
+      border: 2px solid var(--color-border);
       border-radius: 0.5rem;
       margin-bottom: 1rem;
       font-size: 1rem;
     }
 
-    .login-box input:disabled {
-      background-color: #f3f4f6;
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.875rem;
+      width: 100%;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--color-primary-dark);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
       cursor: not-allowed;
     }
 
@@ -58,51 +101,17 @@
       display: none;
     }
 
-    .login-warning {
-      color: #f59e0b;
+    .login-info {
+      color: #3b82f6;
       font-size: 0.875rem;
       margin-top: 0.5rem;
       display: none;
     }
 
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    /* ========================================= */
-    /* ESTILOS DO ADMIN */
-    /* ========================================= */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --color-primary: #d4af37;
-      --color-primary-dark: #b8860b;
-      --color-secondary: #8b4513;
-      --color-text: #4a2c0f;
-      --color-text-light: #6e5c4c;
-      --color-border: #e2e8f0;
-      --spacing-sm: 1rem;
-      --spacing-md: 1.5rem;
-      --spacing-lg: 2rem;
-      --radius: 0.75rem;
-      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-      min-height: 100vh;
-    }
-
+    /* ADMIN PANEL - Mesmo estilo do admin-seguro.html */
     #admin-panel {
       display: none;
-      padding: var(--spacing-lg);
+      padding: 2rem;
     }
 
     .container {
@@ -111,25 +120,20 @@
     }
 
     .alert {
-      background: #fef3c7;
-      border: 2px solid #f59e0b;
-      padding: var(--spacing-md);
-      border-radius: var(--radius);
-      margin-bottom: var(--spacing-lg);
-      color: #92400e;
-    }
-
-    .alert strong {
-      display: block;
-      margin-bottom: 0.5rem;
+      background: #d1fae5;
+      border: 2px solid #10b981;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      margin-bottom: 2rem;
+      color: #065f46;
     }
 
     .header {
       background: white;
-      padding: var(--spacing-md);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-lg);
-      margin-bottom: var(--spacing-lg);
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -145,34 +149,11 @@
     .header-actions {
       display: flex;
       gap: 0.5rem;
-    }
-
-    .btn {
-      padding: 0.75rem 1.5rem;
-      border: none;
-      border-radius: var(--radius);
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-size: 0.875rem;
-    }
-
-    .btn-primary {
-      background: var(--color-primary);
-      color: white;
-    }
-
-    .btn-primary:hover:not(:disabled) {
-      background: var(--color-primary-dark);
+      flex-wrap: wrap;
     }
 
     .btn-secondary {
       background: var(--color-secondary);
-      color: white;
-    }
-
-    .btn-info {
-      background: #3b82f6;
       color: white;
     }
 
@@ -181,29 +162,24 @@
       color: white;
     }
 
-    .btn-danger:hover {
-      background: #b91c1c;
-    }
-
     .content {
       background: white;
-      padding: var(--spacing-lg);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-lg);
+      padding: 2rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     }
 
     .trips-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: var(--spacing-md);
-      margin-bottom: var(--spacing-lg);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
     }
 
     .trip-card {
       border: 2px solid var(--color-border);
-      border-radius: var(--radius);
-      padding: var(--spacing-md);
-      position: relative;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
     }
 
     .trip-card h3 {
@@ -212,7 +188,7 @@
     }
 
     .trip-card .date {
-      color: var(--color-text-light);
+      color: #6b7280;
       font-size: 0.875rem;
       margin-bottom: 0.5rem;
     }
@@ -239,7 +215,7 @@
     .trip-card .actions {
       display: flex;
       gap: 0.5rem;
-      margin-top: var(--spacing-sm);
+      margin-top: 1rem;
     }
 
     .trip-card .actions button {
@@ -248,6 +224,19 @@
       font-size: 0.875rem;
     }
 
+    #empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #6b7280;
+    }
+
+    #loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--color-primary);
+    }
+
+    /* MODAL */
     .modal {
       display: none;
       position: fixed;
@@ -264,57 +253,43 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: var(--spacing-lg);
+      padding: 2rem;
     }
 
     .modal-content {
       background: white;
-      padding: var(--spacing-lg);
-      border-radius: var(--radius);
+      padding: 2rem;
+      border-radius: 0.75rem;
       max-width: 600px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
     }
 
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: var(--spacing-md);
-    }
-
-    .modal-header h2 {
+    .modal-content h2 {
+      margin-bottom: 1.5rem;
       color: var(--color-text);
     }
 
-    .close-btn {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: var(--color-text-light);
-    }
-
     .form-group {
-      margin-bottom: var(--spacing-md);
+      margin-bottom: 1rem;
     }
 
     .form-group label {
       display: block;
       margin-bottom: 0.5rem;
-      color: var(--color-text);
       font-weight: 600;
+      color: var(--color-text);
     }
 
     .form-group input,
-    .form-group textarea,
-    .form-group select {
+    .form-group select,
+    .form-group textarea {
       width: 100%;
       padding: 0.75rem;
       border: 2px solid var(--color-border);
-      border-radius: var(--radius);
-      font-family: inherit;
+      border-radius: 0.5rem;
+      font-size: 1rem;
     }
 
     .form-group textarea {
@@ -322,171 +297,175 @@
       resize: vertical;
     }
 
-    .loading,
-    .empty-state {
+    .image-upload {
+      border: 2px dashed var(--color-border);
+      border-radius: 0.5rem;
+      padding: 2rem;
       text-align: center;
-      padding: var(--spacing-lg);
-      color: var(--color-text-light);
+      cursor: pointer;
     }
 
-    .export-data {
-      background: #f0fdf4;
-      border: 1px solid #10b981;
-      padding: var(--spacing-md);
-      border-radius: var(--radius);
-      margin-top: var(--spacing-lg);
+    .image-preview {
+      max-width: 100%;
+      max-height: 200px;
+      margin-top: 1rem;
+      border-radius: 0.5rem;
     }
 
-    .export-data h3 {
-      color: var(--color-text);
-      margin-bottom: 0.5rem;
+    .modal-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
     }
 
-    .export-data textarea {
+    .modal-actions button {
+      flex: 1;
+    }
+
+    #export-section {
+      display: none;
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: #f3f4f6;
+      border-radius: 0.5rem;
+    }
+
+    #export-section textarea {
       width: 100%;
-      min-height: 150px;
+      min-height: 200px;
+      padding: 1rem;
+      border: 2px solid var(--color-border);
+      border-radius: 0.5rem;
       font-family: monospace;
-      font-size: 0.75rem;
-      padding: 0.5rem;
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius);
+      font-size: 0.875rem;
     }
 
-    @media (max-width: 768px) {
-      .trips-grid {
-        grid-template-columns: 1fr;
-      }
+    #export-section .btn-group {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
 
-      .header {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .header-actions {
-        flex-direction: column;
-      }
+    #export-section .btn-group button {
+      flex: 1;
     }
   </style>
 </head>
 
 <body>
-
+  <!-- TELA DE LOGIN -->
   <div id="login-screen">
     <div class="login-box">
-      <img src="imgs/logo.png" alt="Amaraltour" width="120" style="margin-bottom: 20px;">
-      <h2>Área Restrita</h2>
-      <p style="margin-bottom: 15px; color: #666;">Digite a senha de administrador</p>
-
-      <form onsubmit="checkLogin(event)">
-        <input type="password" id="adminPassword" placeholder="Senha" required autofocus>
-        <button type="submit" class="btn btn-primary" id="loginBtn" style="width: 100%;">Entrar</button>
-        <p id="loginError" class="login-error">Senha incorreta!</p>
-        <p id="loginWarning" class="login-warning"></p>
-      </form>
+      <h2>🔐 Admin Amaraltour</h2>
+      <p>Autenticação via Netlify Function</p>
+      <input type="password" id="adminPassword" placeholder="Digite sua senha" onkeypress="if(event.key==='Enter') login()" />
+      <button class="btn btn-primary" onclick="login()">Entrar</button>
+      <p class="login-error" id="loginError">Senha incorreta!</p>
+      <p class="login-info" id="loginInfo"></p>
     </div>
   </div>
 
+  <!-- PAINEL ADMIN -->
   <div id="admin-panel">
     <div class="container">
-      <div id="local-alert" class="alert" style="display: none;">
-        <strong>⚠️ Modo Local Detectado</strong>
-        <p>Você está testando localmente. Os dados estão sendo salvos no navegador (localStorage).</p>
-        <p>Quando publicar no Netlify, o sistema usará armazenamento em nuvem automaticamente.</p>
+      <div class="alert">
+        <strong>✅ Admin Oficial - Integrado com Netlify</strong>
+        <p>Autenticação segura via Netlify Functions. Faça backup regularmente!</p>
       </div>
 
       <div class="header">
-        <h1>🌍 Painel Administrativo - Amaraltour</h1>
+        <h1>Admin - Amaraltour</h1>
         <div class="header-actions">
           <button class="btn btn-primary" onclick="openAddModal()">+ Nova Viagem</button>
-          <button class="btn btn-info" onclick="toggleExportData()">📊 Ver Dados</button>
-          <button class="btn btn-secondary" onclick="logout()">🔒 Sair</button>
+          <button class="btn btn-secondary" onclick="toggleExportData()">Exportar/Importar</button>
+          <button class="btn btn-danger" onclick="logout()">Sair</button>
         </div>
       </div>
 
       <div class="content">
-        <div id="loading" class="loading">Carregando viagens...</div>
+        <div id="loading">Carregando...</div>
+
         <div id="trips-container" class="trips-grid" style="display: none;"></div>
-        <div id="empty-state" class="empty-state" style="display: none;">
-          <p>Nenhuma viagem cadastrada ainda.</p>
-          <p>Clique em "Nova Viagem" para adicionar a primeira!</p>
+
+        <div id="empty-state" style="display: none;">
+          <p>📭 Nenhuma viagem cadastrada ainda.</p>
+          <p>Clique em "Nova Viagem" para começar!</p>
         </div>
 
-        <div id="export-section" class="export-data" style="display: none;">
-          <h3>Dados das Viagens (JSON)</h3>
-          <p style="font-size: 0.875rem; color: var(--color-text-light); margin-bottom: 0.5rem;">
-            Use isso para backup ou para migrar dados entre ambientes.
-          </p>
-          <textarea id="export-data" readonly></textarea>
+        <div id="export-section">
+          <h3>Exportar/Importar Dados</h3>
+          <textarea id="export-data" placeholder="Cole aqui o JSON para importar..."></textarea>
+          <div class="btn-group">
+            <button class="btn btn-primary" onclick="copyExportData()">Copiar</button>
+            <button class="btn btn-primary" onclick="downloadBackup()">Download</button>
+            <button class="btn btn-secondary" onclick="importData()">Importar</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- MODAL - Mesmo do admin-seguro.html -->
   <div id="trip-modal" class="modal">
     <div class="modal-content">
-      <div class="modal-header">
-        <h2 id="modal-title">Nova Viagem</h2>
-        <button class="close-btn" onclick="closeModal()">&times;</button>
-      </div>
+      <h2 id="modal-title">Nova Viagem</h2>
       <form id="trip-form" onsubmit="saveTrip(event)">
         <div class="form-group">
-          <label>Título da Viagem *</label>
-          <input type="text" id="title" required placeholder="Ex: Natal Luz - Garanhuns, PE">
-        </div>
-        <div class="form-group">
-          <label>Data *</label>
-          <input type="text" id="date" required placeholder="Ex: 20 a 24 de Junho de 2026">
-        </div>
-        <div class="form-group">
-          <label>Descrição Curta (para o card da home) *</label>
-          <textarea id="description" required placeholder="Resumo curto..."></textarea>
+          <label>Título *</label>
+          <input type="text" id="title" required />
         </div>
 
         <div class="form-group">
-          <label>Imagem da Viagem (Do computador) *</label>
-          <input type="file" id="imageInput" accept="image/*" onchange="processImage(this)">
-          <input type="hidden" id="imageBase64">
-          <div style="margin-top: 10px; border: 1px dashed #ccc; padding: 5px; text-align: center;">
-            <img id="imagePreview" src="" alt="Prévia" style="max-width: 100%; max-height: 200px; display: none;">
-            <p id="imagePlaceholder" style="color: #999; font-size: 0.8rem;">Nenhuma imagem selecionada</p>
-          </div>
+          <label>Data *</label>
+          <input type="text" id="date" placeholder="Ex: 20 a 24 de Junho de 2026" required />
+        </div>
+
+        <div class="form-group">
+          <label>Descrição Curta *</label>
+          <textarea id="description" required></textarea>
         </div>
 
         <div class="form-group">
           <label>Status *</label>
-          <select id="status" required>
+          <select id="status">
             <option value="available">Disponível</option>
-            <option value="sold-out">Esgotado</option>
+            <option value="sold_out">Esgotado</option>
           </select>
         </div>
 
-        <hr style="margin: 20px 0; border: 1px solid #eee;">
-        <h3>Detalhes da Página</h3>
-
         <div class="form-group">
-          <label>Texto de Introdução Completo</label>
-          <textarea id="fullIntro" rows="4" placeholder="Texto que aparece no topo da página de detalhes..."></textarea>
+          <label>Imagem *</label>
+          <div class="image-upload" onclick="document.getElementById('imageInput').click()">
+            <input type="file" id="imageInput" accept="image/*" onchange="processImage(this)" style="display: none;" />
+            <p id="imagePlaceholder">Clique para selecionar uma imagem</p>
+            <img id="imagePreview" class="image-preview" style="display: none;" />
+            <input type="hidden" id="imageBase64" />
+          </div>
         </div>
 
         <div class="form-group">
-          <label>Itens Inclusos (Um por linha)</label>
-          <textarea id="includedItems" rows="6" placeholder="✈️ Aéreo ida e volta&#10;🏨 Hospedagem&#10;🚌 Transfers"></textarea>
-          <small style="color: #666">Pressione ENTER para separar os itens.</small>
+          <label>Introdução Completa</label>
+          <textarea id="fullIntro"></textarea>
         </div>
 
         <div class="form-group">
-          <label>Preço por Pessoa</label>
-          <input type="text" id="price" placeholder="Ex: R$ 3.745,50">
+          <label>Itens Inclusos</label>
+          <textarea id="includedItems" placeholder="Ex: Transporte, Hospedagem..."></textarea>
         </div>
 
         <div class="form-group">
-          <label>Informações de Pagamento (Um por linha)</label>
-          <textarea id="paymentInfo" rows="3" placeholder="Entrada de R$ 300,00 + 10x sem juros&#10;Desconto de 10% à vista"></textarea>
+          <label>Preço</label>
+          <input type="text" id="price" placeholder="Ex: R$ 1.500,00" />
         </div>
 
-        <div style="display: flex; gap: 0.5rem; margin-top: 20px;">
-          <button type="submit" class="btn btn-primary" style="flex: 1">Salvar</button>
-          <button type="button" class="btn btn-secondary" onclick="closeModal()" style="flex: 1">Cancelar</button>
+        <div class="form-group">
+          <label>Informações de Pagamento</label>
+          <textarea id="paymentInfo"></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary">Salvar</button>
+          <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
         </div>
       </form>
     </div>
@@ -494,163 +473,135 @@
 
   <script>
     // ==========================================
-    // SISTEMA DE STORAGE COM NETLIFY BLOBS
-    // Usando API HTTP diretamente
+    // AUTENTICAÇÃO VIA NETLIFY FUNCTION
+    // ==========================================
+
+    async function login() {
+      const input = document.getElementById('adminPassword');
+      const error = document.getElementById('loginError');
+      const info = document.getElementById('loginInfo');
+      const loginBtn = document.querySelector('#login-screen .btn-primary');
+
+      // Limpa mensagens
+      error.style.display = 'none';
+      info.style.display = 'none';
+
+      // Valida input
+      if (!input.value.trim()) {
+        error.textContent = 'Digite uma senha';
+        error.style.display = 'block';
+        return;
+      }
+
+      // Desabilita botão
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Verificando...';
+
+      try {
+        console.log('🔐 Enviando requisição para Netlify Function...');
+
+        // Chama a Netlify Function
+        const response = await fetch('/.netlify/functions/auth', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            password: input.value
+          })
+        });
+
+        console.log('📡 Resposta recebida:', response.status);
+
+        const result = await response.json();
+        console.log('📦 Dados:', result);
+
+        if (response.ok && result.authenticated) {
+          // Login bem-sucedido!
+          console.log('✅ Autenticado com sucesso!');
+          sessionStorage.setItem('admin_auth', 'true');
+          sessionStorage.setItem('auth_timestamp', Date.now().toString());
+          showAdminPanel();
+        } else {
+          // Senha incorreta
+          console.log('❌ Senha incorreta');
+          error.textContent = 'Senha incorreta!';
+          error.style.display = 'block';
+          input.value = '';
+          loginBtn.disabled = false;
+          loginBtn.textContent = 'Entrar';
+        }
+      } catch (err) {
+        console.error('❌ Erro na autenticação:', err);
+        error.textContent = 'Erro ao conectar com servidor. Verifique o console.';
+        error.style.display = 'block';
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Entrar';
+      }
+    }
+
+    function showAdminPanel() {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('admin-panel').style.display = 'block';
+      initSystem();
+    }
+
+    function logout() {
+      sessionStorage.removeItem('admin_auth');
+      sessionStorage.removeItem('auth_timestamp');
+      location.reload();
+    }
+
+    // Verificar se já está autenticado
+    window.addEventListener('load', () => {
+      const isAuth = sessionStorage.getItem('admin_auth');
+      const timestamp = sessionStorage.getItem('auth_timestamp');
+
+      // Sessão expira em 2 horas
+      const TWO_HOURS = 2 * 60 * 60 * 1000;
+
+      if (isAuth === 'true' && timestamp) {
+        const elapsed = Date.now() - parseInt(timestamp);
+        if (elapsed < TWO_HOURS) {
+          showAdminPanel();
+        } else {
+          sessionStorage.clear();
+          alert('Sessão expirada. Faça login novamente.');
+        }
+      }
+    });
+
+    // ==========================================
+    // SISTEMA DE GERENCIAMENTO (IGUAL AO SEGURO)
     // ==========================================
 
     let trips = [];
     let editingId = null;
-
     const STORAGE_KEY = 'amaraltour-trips';
-    const BACKUP_KEY = 'amaraltour-trips-backup';
-    const LAST_SYNC_KEY = 'amaraltour-last-sync';
-
-    // Configuração da API do Netlify Blobs
-    const BLOB_STORE = 'amaraltour'; // Nome da store
-    const API_BASE = '/.netlify/blobs';
 
     function initSystem() {
-      console.log('🚀 Inicializando sistema...');
-      checkEnvironment();
       loadTrips();
-      startAutoBackup();
     }
 
-    function checkEnvironment() {
-      const alertElement = document.getElementById('local-alert');
-
-      // Sempre usa localStorage como backup
-      alertElement.style.display = 'block';
-      alertElement.innerHTML = `
-    <strong>💾 Sistema de Armazenamento</strong>
-    <p>✅ Backup local ativo (localStorage)</p>
-    <p>✅ Sincronização com Netlify Blobs</p>
-    <p>📅 Último backup: ${getLastSyncTime()}</p>
-  `;
-      alertElement.style.background = '#d1fae5';
-      alertElement.style.borderColor = '#10b981';
-      alertElement.style.color = '#065f46';
-    }
-
-    // Sistema de storage com Netlify Blobs via API HTTP
-    const storage = {
-      async get(key) {
-        console.log('📥 Carregando dados...');
-
-        try {
-          // Tenta pegar do Netlify Blobs via API HTTP
-          const response = await fetch(`${API_BASE}/${BLOB_STORE}/${key}`);
-
-          if (response.ok) {
-            const value = await response.text();
-            console.log('✅ Dados carregados do Netlify Blobs');
-
-            // Salva backup local
-            localStorage.setItem(BACKUP_KEY, value);
-            localStorage.setItem(LAST_SYNC_KEY, new Date().toISOString());
-
-            return { key, value };
-          }
-        } catch (error) {
-          console.warn('⚠️ Netlify Blobs não disponível, usando localStorage:', error.message);
-        }
-
-        // Fallback 1: localStorage normal
-        const localValue = localStorage.getItem(key);
-        if (localValue) {
-          console.log('📂 Dados carregados do localStorage');
-          return { key, value: localValue };
-        }
-
-        // Fallback 2: backup
-        const backupValue = localStorage.getItem(BACKUP_KEY);
-        if (backupValue) {
-          console.log('🔄 Usando backup local');
-          return { key: BACKUP_KEY, value: backupValue };
-        }
-
-        console.log('ℹ️ Nenhum dado encontrado');
-        return null;
-      },
-
-      async set(key, value) {
-        console.log('💾 Salvando dados...');
-        const errors = [];
-
-        // SEMPRE salva localmente primeiro (garantia)
-        try {
-          localStorage.setItem(key, value);
-          localStorage.setItem(BACKUP_KEY, value);
-          localStorage.setItem(LAST_SYNC_KEY, new Date().toISOString());
-          console.log('✅ Salvo no localStorage');
-        } catch (e) {
-          console.error('❌ Erro ao salvar localmente:', e);
-          errors.push('localStorage: ' + e.message);
-        }
-
-        // Tenta salvar no Netlify Blobs
-        try {
-          const response = await fetch(`${API_BASE}/${BLOB_STORE}/${key}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: value
-          });
-
-          if (response.ok) {
-            console.log('✅ Salvo no Netlify Blobs (nuvem)');
-            checkEnvironment(); // Atualiza status
-            return { key, value };
-          } else {
-            console.warn('⚠️ Netlify Blobs retornou erro:', response.status);
-          }
-        } catch (e) {
-          console.warn('⚠️ Netlify Blobs não disponível:', e.message);
-          errors.push('Netlify Blobs: ' + e.message);
-        }
-
-        // Se salvou localmente, está OK
-        if (localStorage.getItem(key)) {
-          console.log('✅ Dados salvos com sucesso (localStorage)');
-          return { key, value };
-        }
-
-        // Se não conseguiu salvar em lugar nenhum
-        if (errors.length > 0) {
-          throw new Error('Falha ao salvar: ' + errors.join(', '));
-        }
-
-        return { key, value };
-      }
-    };
-
-    async function loadTrips() {
-      const loading = document.getElementById('loading');
-      loading.style.display = 'block';
-
+    function loadTrips() {
       try {
-        const result = await storage.get(STORAGE_KEY);
-        if (result && result.value) {
-          trips = JSON.parse(result.value);
-          console.log(`✅ Carregadas ${trips.length} viagens`);
-        } else {
-          trips = [];
-          console.log('ℹ️ Nenhuma viagem encontrada');
+        const data = localStorage.getItem(STORAGE_KEY);
+        if (data) {
+          trips = JSON.parse(data);
         }
       } catch (error) {
-        console.error('❌ Erro ao carregar viagens:', error);
+        console.error('Erro ao carregar:', error);
         trips = [];
-        alert('⚠️ Erro ao carregar viagens. Verifique o console para detalhes.');
       }
-
-      loading.style.display = 'none';
       renderTrips();
     }
 
     function renderTrips() {
       const container = document.getElementById('trips-container');
+      const loading = document.getElementById('loading');
       const emptyState = document.getElementById('empty-state');
+
+      loading.style.display = 'none';
 
       if (trips.length === 0) {
         container.style.display = 'none';
@@ -662,208 +613,23 @@
       container.style.display = 'grid';
 
       container.innerHTML = trips.map(trip => `
-    <div class="trip-card">
-      <span class="status ${trip.status === 'available' ? 'available' : 'sold-out'}">
-        ${trip.status === 'available' ? 'Disponível' : 'Esgotado'}
-      </span>
-      <h3>${trip.title}</h3>
-      <p class="date">📅 ${trip.date}</p>
-      <p style="font-size: 0.875rem; color: #6e5c4c; margin-top: 0.5rem;">
-        ${trip.description ? trip.description.substring(0, 80) + '...' : 'Sem descrição'}
-      </p>
-      <div class="actions">
-        <button class="btn btn-primary" onclick="editTrip('${trip.id}')">Editar</button>
-        <button class="btn btn-danger" onclick="deleteTrip('${trip.id}')">Excluir</button>
-      </div>
-    </div>
-  `).join('');
-
-      console.log(`📋 Renderizadas ${trips.length} viagens`);
+        <div class="trip-card">
+          <span class="status ${trip.status === 'available' ? 'available' : 'sold-out'}">
+            ${trip.status === 'available' ? 'Disponível' : 'Esgotado'}
+          </span>
+          <h3>${trip.title}</h3>
+          <p class="date">📅 ${trip.date}</p>
+          <p style="font-size: 0.875rem; color: #6b7280; margin-top: 0.5rem;">
+            ${trip.description ? trip.description.substring(0, 80) + '...' : 'Sem descrição'}
+          </p>
+          <div class="actions">
+            <button class="btn btn-primary" onclick="editTrip('${trip.id}')">Editar</button>
+            <button class="btn btn-danger" onclick="deleteTrip('${trip.id}')">Excluir</button>
+          </div>
+        </div>
+      `).join('');
     }
 
-    async function saveTrip(event) {
-      event.preventDefault();
-
-      const imageValue = document.getElementById('imageBase64').value;
-      if (!imageValue) {
-        alert("❌ Por favor, selecione uma imagem para a viagem.");
-        return;
-      }
-
-      const tripData = {
-        id: editingId || Date.now().toString(),
-        title: document.getElementById('title').value,
-        date: document.getElementById('date').value,
-        description: document.getElementById('description').value,
-        image: imageValue,
-        status: document.getElementById('status').value,
-        fullIntro: document.getElementById('fullIntro').value || '',
-        includedItems: document.getElementById('includedItems').value || '',
-        price: document.getElementById('price').value || '',
-        paymentInfo: document.getElementById('paymentInfo').value || '',
-        link: `paginas-informacoes/detalhes-viagem.html?id=${editingId || Date.now().toString()}`,
-        createdAt: editingId ? trips.find(t => t.id === editingId)?.createdAt : new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      };
-
-      if (editingId) {
-        const index = trips.findIndex(t => t.id === editingId);
-        if (index !== -1) {
-          trips[index] = tripData;
-        }
-      } else {
-        trips.push(tripData);
-      }
-
-      try {
-        await storage.set(STORAGE_KEY, JSON.stringify(trips));
-        alert(`✅ Viagem salva com sucesso!\n\n📊 Total de viagens: ${trips.length}\n⏰ ${new Date().toLocaleString('pt-BR')}`);
-        closeModal();
-        renderTrips();
-      } catch (error) {
-        if (error.name === 'QuotaExceededError' || error.message.includes('quota')) {
-          alert('❌ Erro: Armazenamento cheio!\n\nExclua viagens antigas ou reduza o tamanho das imagens.');
-        } else {
-          alert('❌ Erro ao salvar:\n\n' + error.message);
-        }
-        console.error('❌ Erro completo:', error);
-      }
-    }
-
-    async function deleteTrip(id) {
-      const trip = trips.find(t => t.id === id);
-      if (!trip) return;
-
-      if (!confirm(`❓ Tem certeza que deseja excluir "${trip.title}"?\n\n⚠️ Esta ação não pode ser desfeita.`)) {
-        return;
-      }
-
-      trips = trips.filter(t => t.id !== id);
-
-      try {
-        await storage.set(STORAGE_KEY, JSON.stringify(trips));
-        alert(`✅ Viagem "${trip.title}" excluída com sucesso!`);
-        renderTrips();
-      } catch (error) {
-        alert('❌ Erro ao excluir:\n\n' + error.message);
-        console.error('❌ Erro completo:', error);
-      }
-    }
-
-    // Exportar/Importar dados
-    function toggleExportData() {
-      const section = document.getElementById('export-section');
-      const textarea = document.getElementById('export-data');
-
-      if (section.style.display === 'none') {
-        section.style.display = 'block';
-        const exportData = {
-          trips: trips,
-          exportedAt: new Date().toISOString(),
-          totalTrips: trips.length,
-          version: '1.0.0'
-        };
-        textarea.value = JSON.stringify(exportData, null, 2);
-      } else {
-        section.style.display = 'none';
-      }
-    }
-
-    async function importData() {
-      const textarea = document.getElementById('export-data');
-      const data = textarea.value.trim();
-
-      if (!data) {
-        alert('❌ Cole os dados de backup no campo acima primeiro.');
-        return;
-      }
-
-      try {
-        const parsed = JSON.parse(data);
-        const importedTrips = parsed.trips || parsed;
-
-        if (!Array.isArray(importedTrips)) {
-          throw new Error('Formato inválido: esperado um array de viagens');
-        }
-
-        if (!confirm(`❓ Importar ${importedTrips.length} viagem(ns)?\n\n⚠️ Isso irá SUBSTITUIR todas as ${trips.length} viagens atuais.`)) {
-          return;
-        }
-
-        trips = importedTrips;
-        await storage.set(STORAGE_KEY, JSON.stringify(trips));
-
-        alert(`✅ Importação concluída!\n\n📊 ${trips.length} viagem(ns) importada(s) com sucesso.`);
-        renderTrips();
-        textarea.value = '';
-        document.getElementById('export-section').style.display = 'none';
-      } catch (error) {
-        alert('❌ Erro ao importar dados:\n\n' + error.message + '\n\nVerifique se o JSON está correto.');
-        console.error('❌ Erro de importação:', error);
-      }
-    }
-
-    function copyExportData() {
-      const textarea = document.getElementById('export-data');
-      textarea.select();
-      document.execCommand('copy');
-      alert('✅ Dados copiados para a área de transferência!');
-    }
-
-    function downloadBackup() {
-      const exportData = {
-        trips: trips,
-        exportedAt: new Date().toISOString(),
-        totalTrips: trips.length,
-        version: '1.0.0'
-      };
-
-      const dataStr = JSON.stringify(exportData, null, 2);
-      const dataBlob = new Blob([dataStr], { type: 'application/json' });
-      const url = URL.createObjectURL(dataBlob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `amaraltour-backup-${new Date().toISOString().split('T')[0]}.json`;
-      link.click();
-      URL.revokeObjectURL(url);
-
-      alert('✅ Backup baixado com sucesso!');
-    }
-
-    // Backup automático
-    function startAutoBackup() {
-      // Backup a cada 5 minutos
-      setInterval(() => {
-        if (trips.length > 0) {
-          localStorage.setItem(BACKUP_KEY, JSON.stringify(trips));
-          localStorage.setItem(LAST_SYNC_KEY, new Date().toISOString());
-          console.log('🔄 Backup automático realizado');
-          checkEnvironment(); // Atualiza display
-        }
-      }, 5 * 60 * 1000);
-
-      console.log('⏰ Backup automático ativado (a cada 5 minutos)');
-    }
-
-    function getLastSyncTime() {
-      const lastSync = localStorage.getItem(LAST_SYNC_KEY);
-      if (!lastSync) return 'Nunca';
-
-      const date = new Date(lastSync);
-      const now = new Date();
-      const diffMinutes = Math.floor((now - date) / (1000 * 60));
-
-      if (diffMinutes < 1) return 'Agora mesmo';
-      if (diffMinutes < 60) return `${diffMinutes} minuto(s) atrás`;
-
-      const diffHours = Math.floor(diffMinutes / 60);
-      if (diffHours < 24) return `${diffHours} hora(s) atrás`;
-
-      const diffDays = Math.floor(diffHours / 24);
-      return `${diffDays} dia(s) atrás`;
-    }
-
-    // Funções do modal (permanecem iguais)
     function openAddModal() {
       editingId = null;
       document.getElementById('modal-title').textContent = 'Nova Viagem';
@@ -889,7 +655,6 @@
       document.getElementById('imagePreview').src = trip.image;
       document.getElementById('imagePreview').style.display = 'block';
       document.getElementById('imagePlaceholder').style.display = 'none';
-      document.getElementById('imageInput').value = '';
 
       document.getElementById('fullIntro').value = trip.fullIntro || '';
       document.getElementById('includedItems').value = trip.includedItems || '';
@@ -932,13 +697,9 @@
 
             canvas.width = width;
             canvas.height = height;
-            ctx.imageSmoothingEnabled = true;
-            ctx.imageSmoothingQuality = 'high';
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
             const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-            const sizeInKB = Math.round((dataUrl.length * 3) / 4 / 1024);
-            console.log(`📷 Imagem processada: ${sizeInKB}KB`);
 
             document.getElementById('imageBase64').value = dataUrl;
             document.getElementById('imagePreview').src = dataUrl;
@@ -949,6 +710,140 @@
         }
         reader.readAsDataURL(file);
       }
+    }
+
+    function saveTrip(event) {
+      event.preventDefault();
+
+      const imageValue = document.getElementById('imageBase64').value;
+      if (!imageValue) {
+        alert("❌ Por favor, selecione uma imagem para a viagem.");
+        return;
+      }
+
+      const tripData = {
+        id: editingId || Date.now().toString(),
+        title: document.getElementById('title').value,
+        date: document.getElementById('date').value,
+        description: document.getElementById('description').value,
+        image: imageValue,
+        status: document.getElementById('status').value,
+        fullIntro: document.getElementById('fullIntro').value || '',
+        includedItems: document.getElementById('includedItems').value || '',
+        price: document.getElementById('price').value || '',
+        paymentInfo: document.getElementById('paymentInfo').value || '',
+        link: `paginas-informacoes/detalhes-viagem.html?id=${editingId || Date.now().toString()}`,
+        createdAt: editingId ? trips.find(t => t.id === editingId)?.createdAt : new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+
+      if (editingId) {
+        const index = trips.findIndex(t => t.id === editingId);
+        if (index !== -1) {
+          trips[index] = tripData;
+        }
+      } else {
+        trips.push(tripData);
+      }
+
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));
+        alert(`✅ Viagem salva com sucesso!\n\n📊 Total: ${trips.length} viagem(ns)`);
+        closeModal();
+        renderTrips();
+      } catch (error) {
+        alert('❌ Erro ao salvar: ' + error.message);
+      }
+    }
+
+    function deleteTrip(id) {
+      const trip = trips.find(t => t.id === id);
+      if (!trip) return;
+
+      if (!confirm(`Excluir "${trip.title}"?`)) return;
+
+      trips = trips.filter(t => t.id !== id);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));
+      alert('✅ Viagem excluída!');
+      renderTrips();
+    }
+
+    function toggleExportData() {
+      const section = document.getElementById('export-section');
+      const textarea = document.getElementById('export-data');
+
+      if (section.style.display === 'none') {
+        section.style.display = 'block';
+        const exportData = {
+          trips: trips,
+          exportedAt: new Date().toISOString(),
+          totalTrips: trips.length,
+          version: '1.0.0'
+        };
+        textarea.value = JSON.stringify(exportData, null, 2);
+      } else {
+        section.style.display = 'none';
+      }
+    }
+
+    function importData() {
+      const textarea = document.getElementById('export-data');
+      const data = textarea.value.trim();
+
+      if (!data) {
+        alert('❌ Cole os dados no campo acima.');
+        return;
+      }
+
+      try {
+        const parsed = JSON.parse(data);
+        const importedTrips = parsed.trips || parsed;
+
+        if (!Array.isArray(importedTrips)) {
+          throw new Error('Formato inválido');
+        }
+
+        if (!confirm(`Importar ${importedTrips.length} viagem(ns)?\n\nIsso substituirá as ${trips.length} atuais.`)) {
+          return;
+        }
+
+        trips = importedTrips;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));
+
+        alert(`✅ ${trips.length} viagem(ns) importada(s)!`);
+        renderTrips();
+        textarea.value = '';
+        document.getElementById('export-section').style.display = 'none';
+      } catch (error) {
+        alert('❌ Erro ao importar: ' + error.message);
+      }
+    }
+
+    function copyExportData() {
+      const textarea = document.getElementById('export-data');
+      textarea.select();
+      document.execCommand('copy');
+      alert('✅ Copiado!');
+    }
+
+    function downloadBackup() {
+      const exportData = {
+        trips: trips,
+        exportedAt: new Date().toISOString(),
+        totalTrips: trips.length,
+        version: '1.0.0'
+      };
+
+      const dataStr = JSON.stringify(exportData, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `amaraltour-backup-${new Date().toISOString().split('T')[0]}.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+
+      alert('✅ Backup baixado!');
     }
   </script>
 </body>
