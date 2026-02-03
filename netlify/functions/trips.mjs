@@ -1,74 +1,48 @@
 import { getStore } from "@netlify/blobs";
 
-const BLOB_KEY = "amaraltour-trips";
+export default async (req, context) => {
+  const store = getStore("amaraltour");
+  const blobKey = "amaraltour-trips";
+  const headers = {
+    "Content-Type": "application/json",
+    // Permite que o site acesse a função sem bloqueios
+    "Access-Control-Allow-Origin": "*",
+  };
 
-export const handler = async (event, context) => {
-  const headers = { "Content-Type": "application/json" };
-
-  // No formato .mjs, o Blobs consegue ler o contexto automaticamente melhor
-  // mas mantemos a passagem explícita por segurança
-  let store;
   try {
-    store = getStore({ name: "amaraltour", context });
-  } catch (err) {
-    console.error("Erro config Blobs:", err);
-    return {
-      statusCode: 500,
-      headers,
-      body: JSON.stringify({
-        error: "Erro na configuração do Blobs: " + err.message,
-      }),
-    };
-  }
-
-  // ─── GET — retorna todas as viagens ───
-  if (event.httpMethod === "GET") {
-    try {
-      const raw = await store.get(BLOB_KEY);
-      const trips = raw ? JSON.parse(raw) : [];
-      return { statusCode: 200, headers, body: JSON.stringify(trips) };
-    } catch (err) {
-      console.error("Erro no GET:", err);
-      // Se der erro de leitura, retorna array vazio para não quebrar o site
-      return { statusCode: 200, headers, body: JSON.stringify([]) };
+    // ─── GET: Retorna as viagens ───
+    if (req.method === "GET") {
+      const data = await store.get(blobKey);
+      // Se não tiver dados, retorna lista vazia
+      const trips = data ? JSON.parse(data) : [];
+      return new Response(JSON.stringify(trips), { status: 200, headers });
     }
-  }
 
-  // ─── POST — salva a lista inteira ───
-  if (event.httpMethod === "POST") {
-    try {
-      if (!event.body) throw new Error("Corpo da requisição vazio");
-      const { trips } = JSON.parse(event.body);
+    // ─── POST: Salva as viagens ───
+    if (req.method === "POST") {
+      // No formato novo, lemos os dados assim:
+      const body = await req.json();
 
-      if (!Array.isArray(trips)) {
-        return {
-          statusCode: 400,
-          headers,
-          body: JSON.stringify({
-            error: "O formato precisa ser uma lista (array)",
-          }),
-        };
+      if (!body.trips || !Array.isArray(body.trips)) {
+        return new Response(
+          JSON.stringify({ error: "Formato inválido. Esperado { trips: [] }" }),
+          { status: 400, headers },
+        );
       }
 
-      await store.set(BLOB_KEY, JSON.stringify(trips));
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify({ ok: true, total: trips.length }),
-      };
-    } catch (err) {
-      console.error("Erro no POST:", err);
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({ error: "Erro ao salvar: " + err.message }),
-      };
+      await store.set(blobKey, JSON.stringify(body.trips));
+      return new Response(
+        JSON.stringify({ ok: true, total: body.trips.length }),
+        { status: 200, headers },
+      );
     }
-  }
 
-  return {
-    statusCode: 405,
-    headers,
-    body: JSON.stringify({ error: "Método não permitido" }),
-  };
+    return new Response("Método não permitido", { status: 405, headers });
+  } catch (err) {
+    console.error("Erro no Blobs:", err);
+    return new Response(
+      JSON.stringify({ error: "Erro interno: " + err.message }),
+      { status: 500, headers },
+    );
+  }
 };
