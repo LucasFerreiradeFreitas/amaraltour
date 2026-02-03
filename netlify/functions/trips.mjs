@@ -1,20 +1,22 @@
-const { getStore } = require("@netlify/blobs");
+import { getStore } from "@netlify/blobs";
 
 const BLOB_KEY = "amaraltour-trips";
 
-// context é obrigatório nas Functions 1ª geração para o Blobs funcionar
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   const headers = { "Content-Type": "application/json" };
-  let store;
 
+  // No formato .mjs, o Blobs consegue ler o contexto automaticamente melhor
+  // mas mantemos a passagem explícita por segurança
+  let store;
   try {
     store = getStore({ name: "amaraltour", context });
   } catch (err) {
+    console.error("Erro config Blobs:", err);
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({
-        error: "Erro ao conectar com Blobs: " + err.message,
+        error: "Erro na configuração do Blobs: " + err.message,
       }),
     };
   }
@@ -26,20 +28,25 @@ exports.handler = async (event, context) => {
       const trips = raw ? JSON.parse(raw) : [];
       return { statusCode: 200, headers, body: JSON.stringify(trips) };
     } catch (err) {
+      console.error("Erro no GET:", err);
+      // Se der erro de leitura, retorna array vazio para não quebrar o site
       return { statusCode: 200, headers, body: JSON.stringify([]) };
     }
   }
 
-  // ─── POST — salva a lista inteira de viagens ───
+  // ─── POST — salva a lista inteira ───
   if (event.httpMethod === "POST") {
     try {
+      if (!event.body) throw new Error("Corpo da requisição vazio");
       const { trips } = JSON.parse(event.body);
 
       if (!Array.isArray(trips)) {
         return {
           statusCode: 400,
           headers,
-          body: JSON.stringify({ error: "trips deve ser um array" }),
+          body: JSON.stringify({
+            error: "O formato precisa ser uma lista (array)",
+          }),
         };
       }
 
@@ -50,6 +57,7 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({ ok: true, total: trips.length }),
       };
     } catch (err) {
+      console.error("Erro no POST:", err);
       return {
         statusCode: 500,
         headers,
