@@ -2,12 +2,13 @@ const { getStore } = require("@netlify/blobs");
 
 const BLOB_KEY = "amaraltour-trips";
 
-exports.handler = async (event) => {
+// context é obrigatório nas Functions 1ª geração para o Blobs funcionar
+exports.handler = async (event, context) => {
   const headers = { "Content-Type": "application/json" };
   let store;
 
   try {
-    store = getStore("amaraltour");
+    store = getStore({ name: "amaraltour", context });
   } catch (err) {
     return {
       statusCode: 500,
@@ -24,8 +25,7 @@ exports.handler = async (event) => {
       const raw = await store.get(BLOB_KEY);
       const trips = raw ? JSON.parse(raw) : [];
       return { statusCode: 200, headers, body: JSON.stringify(trips) };
-    } catch {
-      // Se não existe ainda, retorna array vazio
+    } catch (err) {
       return { statusCode: 200, headers, body: JSON.stringify([]) };
     }
   }
