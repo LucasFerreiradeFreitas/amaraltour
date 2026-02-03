@@ -56,7 +56,9 @@ document.querySelectorAll(".trip-card").forEach((card) => {
 // ─── Carrega viagens da nuvem (Netlify Function → Blobs) ───
 async function loadTripsFromStorage() {
   try {
-    const response = await fetch("/.netlify/functions/trips");
+    // ALTERAÇÃO AQUI: Adicionamos ?t=${Date.now()} para evitar cache
+    const response = await fetch(`/.netlify/functions/trips?t=${Date.now()}`);
+
     if (!response.ok) throw new Error("Erro " + response.status);
 
     const trips = await response.json();
