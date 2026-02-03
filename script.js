@@ -53,35 +53,19 @@ document.querySelectorAll(".trip-card").forEach((card) => {
   observer.observe(card);
 });
 
-// Função para carregar viagens do storage
+// ─── Carrega viagens da nuvem (Netlify Function → Blobs) ───
 async function loadTripsFromStorage() {
-  let trips = [];
-
   try {
-    // 1. Tenta verificar se existe o storage na nuvem (Netlify/Blobs)
-    if (window.storage) {
-      const result = await window.storage.get("amaraltour-trips");
-      if (result && result.value) {
-        trips = JSON.parse(result.value);
-      }
-    }
-    // 2. Se não tiver nuvem, verifica o LocalStorage (Seu computador)
-    else {
-      const localData = localStorage.getItem("amaraltour-trips");
-      if (localData) {
-        trips = JSON.parse(localData);
-      }
-    }
+    const response = await fetch("/.netlify/functions/trips");
+    if (!response.ok) throw new Error("Erro " + response.status);
 
-    // 3. Se encontrou viagens, renderiza
-    if (trips.length > 0) {
+    const trips = await response.json();
+
+    if (Array.isArray(trips) && trips.length > 0) {
       renderDynamicTrips(trips);
     }
   } catch (error) {
-    console.log(
-      "Erro ao carregar viagens ou nenhuma viagem extra encontrada:",
-      error,
-    );
+    console.log("Não foi possível carregar viagens extras:", error);
   }
 }
 
@@ -89,10 +73,15 @@ async function loadTripsFromStorage() {
 function renderDynamicTrips(trips) {
   const tripsGrid = document.querySelector(".trips-grid");
 
-  // Adiciona as viagens do admin AO LADO das viagens estáticas
   trips.forEach((trip) => {
     const tripCard = createTripCard(trip);
     tripsGrid.appendChild(tripCard);
+
+    // aplica a mesma animação de entrada dos cards estáticos
+    tripCard.style.opacity = "0";
+    tripCard.style.transform = "translateY(20px)";
+    tripCard.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+    observer.observe(tripCard);
   });
 }
 
@@ -123,7 +112,7 @@ function createTripCard(trip) {
       <p class="trip-description">
         ${trip.description}
       </p>
-      <a href="${trip.link}" class="btn-saiba-mais">Saiba Mais</a>
+      <a href="${trip.link || "#"}" class="btn-saiba-mais">Saiba Mais</a>
     </div>
   `;
 

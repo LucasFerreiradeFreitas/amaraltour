@@ -577,20 +577,30 @@
 
     let trips = [];
     let editingId = null;
-    const STORAGE_KEY = 'amaraltour-trips';
+
+    // ── salva a lista atual no Blobs via Function ──
+    async function syncTrips() {
+      const res = await fetch('/.netlify/functions/trips', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ trips })
+      });
+      if (!res.ok) throw new Error('Erro ao salvar na nuvem');
+    }
 
     function initSystem() {
       loadTrips();
     }
 
-    function loadTrips() {
+    async function loadTrips() {
+      document.getElementById('loading').style.display = 'block';
       try {
-        const data = localStorage.getItem(STORAGE_KEY);
-        if (data) {
-          trips = JSON.parse(data);
+        const res = await fetch('/.netlify/functions/trips');
+        if (res.ok) {
+          trips = await res.json();
         }
-      } catch (error) {
-        console.error('Erro ao carregar:', error);
+      } catch (err) {
+        console.error('Erro ao carregar viagens:', err);
         trips = [];
       }
       renderTrips();
@@ -712,7 +722,7 @@
       }
     }
 
-    function saveTrip(event) {
+    async function saveTrip(event) {
       event.preventDefault();
 
       const imageValue = document.getElementById('imageBase64').value;
@@ -747,7 +757,7 @@
       }
 
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));
+        await syncTrips();
         alert(`✅ Viagem salva com sucesso!\n\n📊 Total: ${trips.length} viagem(ns)`);
         closeModal();
         renderTrips();
@@ -756,15 +766,19 @@
       }
     }
 
-    function deleteTrip(id) {
+    async function deleteTrip(id) {
       const trip = trips.find(t => t.id === id);
       if (!trip) return;
 
       if (!confirm(`Excluir "${trip.title}"?`)) return;
 
       trips = trips.filter(t => t.id !== id);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));
-      alert('✅ Viagem excluída!');
+      try {
+        await syncTrips();
+        alert('✅ Viagem excluída!');
+      } catch (err) {
+        alert('❌ Erro ao excluir: ' + err.message);
+      }
       renderTrips();
     }
 
@@ -786,7 +800,7 @@
       }
     }
 
-    function importData() {
+    async function importData() {
       const textarea = document.getElementById('export-data');
       const data = textarea.value.trim();
 
@@ -808,7 +822,7 @@
         }
 
         trips = importedTrips;
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));
+        await syncTrips();
 
         alert(`✅ ${trips.length} viagem(ns) importada(s)!`);
         renderTrips();
