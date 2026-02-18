@@ -86,20 +86,16 @@
         return;
       }
 
-      // 2. Busca os dados do Storage
+      // 2. Busca os dados diretamente da Nuvem (Netlify Blobs)
       try {
-        // Tenta pegar do window.storage (se configurado) ou localStorage
-        let trips = [];
-        const storedData = localStorage.getItem('amaraltour-trips');
+        // Usamos o ?t=Date.now() para evitar o cache do navegador e ter sempre a versão mais recente
+        const response = await fetch(`/.netlify/functions/trips?t=${Date.now()}`);
 
-        if (storedData) {
-          trips = JSON.parse(storedData);
-        } else if (window.storage) {
-          // Fallback para seu sistema de storage se houver
-          const res = await window.storage.get('amaraltour-trips');
-          if (res) trips = JSON.parse(res.value);
-        }
+        if (!response.ok) throw new Error('Erro ao buscar as viagens do servidor');
 
+        const trips = await response.json();
+
+        // 3. Procura a viagem com o ID correspondente
         const trip = trips.find(t => t.id === tripId);
 
         if (trip) {
@@ -108,7 +104,7 @@
           showError();
         }
       } catch (error) {
-        console.error(error);
+        console.error("Erro ao carregar detalhes:", error);
         showError();
       }
     }
