@@ -45,21 +45,21 @@
             </div>
 
             <div class="info-card" id="card-activities" style="display: none;">
-              <h3>🗺️ Roteiros</h3>
+              <h3>🗺️ Roteiros e Valores</h3>
               <ul id="detail-activities"></ul>
             </div>
 
-            <div class="info-card">
+            <div class="info-card" id="card-items" style="display: none;">
               <h3>🌟 O que está incluso no pacote:</h3>
               <ul id="detail-items"></ul>
             </div>
 
-            <div class="info-card">
+            <div class="info-card" id="card-payment" style="display: none;">
               <h3>💰 Valor e Pagamento</h3>
               <p>
                 <strong>Valor por pessoa:</strong> <span id="detail-price"></span>
               </p>
-              <strong style="margin-top: var(--spacing-sm)">💳 Pagamento facilitado:</strong>
+              <strong style="margin-top: var(--spacing-sm); display:block;">💳 Pagamento facilitado:</strong>
               <ul id="detail-payment"></ul>
             </div>
           </div>
@@ -129,21 +129,22 @@
       document.getElementById('detail-image').src = trip.image;
       document.getElementById('detail-price').innerText = trip.price || "Consulte-nos";
 
-      // 2. Preencher a Introdução (O texto corrido) - Preservando quebras de linha!
+      // 2. Preencher a Introdução 
       const introText = trip.fullIntro || trip.description || '';
-      // Transforma "Enters" reais em quebras de linha de HTML (<br>)
       const introHTML = `📅 <strong>${trip.date}</strong> <br /><br /> ${introText.replace(/\n/g, '<br>')}`;
       document.getElementById('detail-intro').innerHTML = introHTML;
 
-      // 3. Função inteligente para preencher as listas dos cards apenas se houver dados
+      // 3. Função inteligente para preencher os cards
       function setupCard(cardId, listId, textData) {
         const card = document.getElementById(cardId);
         const list = document.getElementById(listId);
+        if (!card || !list) return; // Proteção contra erros
+
         list.innerHTML = '';
 
         if (textData && textData.trim() !== '') {
-          card.style.display = 'block'; // Mostra o card
-          const items = textData.split('\n'); // Corta o texto a cada linha pulada
+          card.style.display = 'flex'; // Mantém o layout flex do CSS
+          const items = textData.split('\n');
           items.forEach(item => {
             if (item.trim()) {
               const li = document.createElement('li');
@@ -152,22 +153,36 @@
             }
           });
         } else {
-          card.style.display = 'none'; // Esconde se estiver vazio
+          card.style.display = 'none';
         }
       }
 
-      // 4. Distribuir os dados para os cards
+      // 4. Distribuir os dados
       setupCard('card-boarding', 'detail-boarding', trip.boardingInfo);
       setupCard('card-activities', 'detail-activities', trip.activities);
       setupCard('card-items', 'detail-items', trip.includedItems);
 
-      // 5. Configurar o card de pagamento separadamente (pois tem o cabeçalho de valor base)
+      // 5. Configurar o card de pagamento separadamente
       const paymentCard = document.getElementById('card-payment');
-      if ((trip.paymentInfo && trip.paymentInfo.trim() !== '') || trip.price) {
-        paymentCard.style.display = 'block';
-        setupCard('card-payment-list', 'detail-payment', trip.paymentInfo);
-      } else {
-        paymentCard.style.display = 'none';
+      if (paymentCard) {
+        if (trip.price || (trip.paymentInfo && trip.paymentInfo.trim() !== '')) {
+          paymentCard.style.display = 'flex';
+          const list = document.getElementById('detail-payment');
+          list.innerHTML = '';
+
+          if (trip.paymentInfo && trip.paymentInfo.trim() !== '') {
+            const items = trip.paymentInfo.split('\n');
+            items.forEach(item => {
+              if (item.trim()) {
+                const li = document.createElement('li');
+                li.innerHTML = item.trim();
+                list.appendChild(li);
+              }
+            });
+          }
+        } else {
+          paymentCard.style.display = 'none';
+        }
       }
     }
 
