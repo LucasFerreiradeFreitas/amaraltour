@@ -600,6 +600,23 @@ body {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.info-card ul::-webkit-scrollbar {
+  width: 6px;
+}
+
+.info-card ul::-webkit-scrollbar-track {
+  background: var(--color-surface); /* Fundo creme */
+  border-radius: 4px;
+}
+
+.info-card ul::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary);
+  border-radius: 4px;
 }
 
 /* Estilo de "bloco" para cada item da lista (cada Enter que você dá no painel) */
