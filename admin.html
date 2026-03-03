@@ -444,8 +444,18 @@
         </div>
 
         <div class="form-group">
-          <label>Introdução Completa</label>
+          <label>Introdução</label>
           <textarea id="fullIntro"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>📍 Embarques e Horários</label>
+          <textarea id="boardingInfo" placeholder="Ex: Praça do Derby às 06:00... (Pule linhas para cada item)"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>🗺️ Roteiros</label>
+          <textarea id="activities" placeholder="Ex: Pacote Simples R$ 150,00... (Pule linhas para cada item)"></textarea>
         </div>
 
         <div class="form-group">
@@ -667,6 +677,8 @@
       document.getElementById('imagePlaceholder').style.display = 'none';
 
       document.getElementById('fullIntro').value = trip.fullIntro || '';
+      document.getElementById('boardingInfo').value = trip.boardingInfo || '';
+      document.getElementById('activities').value = trip.activities || '';
       document.getElementById('includedItems').value = trip.includedItems || '';
       document.getElementById('price').value = trip.price || '';
       document.getElementById('paymentInfo').value = trip.paymentInfo || '';
@@ -739,6 +751,8 @@
         image: imageValue,
         status: document.getElementById('status').value,
         fullIntro: document.getElementById('fullIntro').value || '',
+        boardingInfo: document.getElementById('boardingInfo').value || '',
+        activities: document.getElementById('activities').value || '',
         includedItems: document.getElementById('includedItems').value || '',
         price: document.getElementById('price').value || '',
         paymentInfo: document.getElementById('paymentInfo').value || '',

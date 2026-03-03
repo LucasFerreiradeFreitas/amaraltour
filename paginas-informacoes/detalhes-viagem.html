@@ -39,6 +39,16 @@
           <p class="intro" id="detail-intro"></p>
 
           <div class="trip-info-grid">
+            <div class="info-card" id="card-boarding" style="display: none;">
+              <h3>📍 Locais de Embarque</h3>
+              <ul id="detail-boarding"></ul>
+            </div>
+
+            <div class="info-card" id="card-activities" style="display: none;">
+              <h3>🗺️ Roteiros</h3>
+              <ul id="detail-activities"></ul>
+            </div>
+
             <div class="info-card">
               <h3>🌟 O que está incluso no pacote:</h3>
               <ul id="detail-items"></ul>
@@ -113,37 +123,52 @@
       document.getElementById('loading').style.display = 'none';
       document.getElementById('content').style.display = 'block';
 
-      // Preencher campos simples
+      // 1. Preencher Título, Imagem e Preço principal
       document.title = `${trip.title} - Amaraltour`;
       document.getElementById('detail-title').innerText = trip.title;
       document.getElementById('detail-image').src = trip.image;
       document.getElementById('detail-price').innerText = trip.price || "Consulte-nos";
 
-      // Preencher intro (juntando data + texto longo)
-      const introHTML = `📅 ${trip.date} <br /><br /> ${trip.fullIntro || trip.description}`;
+      // 2. Preencher a Introdução (O texto corrido) - Preservando quebras de linha!
+      const introText = trip.fullIntro || trip.description || '';
+      // Transforma "Enters" reais em quebras de linha de HTML (<br>)
+      const introHTML = `📅 <strong>${trip.date}</strong> <br /><br /> ${introText.replace(/\n/g, '<br>')}`;
       document.getElementById('detail-intro').innerHTML = introHTML;
 
-      // Preencher Itens Inclusos (quebrando por linha)
-      const itemsList = document.getElementById('detail-items');
-      const items = (trip.includedItems || '').split('\n');
-      items.forEach(item => {
-        if (item.trim()) {
-          const li = document.createElement('li');
-          li.textContent = item;
-          itemsList.appendChild(li);
-        }
-      });
+      // 3. Função inteligente para preencher as listas dos cards apenas se houver dados
+      function setupCard(cardId, listId, textData) {
+        const card = document.getElementById(cardId);
+        const list = document.getElementById(listId);
+        list.innerHTML = '';
 
-      // Preencher Pagamento (quebrando por linha)
-      const paymentList = document.getElementById('detail-payment');
-      const paymentItems = (trip.paymentInfo || '').split('\n');
-      paymentItems.forEach(item => {
-        if (item.trim()) {
-          const li = document.createElement('li');
-          li.textContent = item;
-          paymentList.appendChild(li);
+        if (textData && textData.trim() !== '') {
+          card.style.display = 'block'; // Mostra o card
+          const items = textData.split('\n'); // Corta o texto a cada linha pulada
+          items.forEach(item => {
+            if (item.trim()) {
+              const li = document.createElement('li');
+              li.innerHTML = item.trim();
+              list.appendChild(li);
+            }
+          });
+        } else {
+          card.style.display = 'none'; // Esconde se estiver vazio
         }
-      });
+      }
+
+      // 4. Distribuir os dados para os cards
+      setupCard('card-boarding', 'detail-boarding', trip.boardingInfo);
+      setupCard('card-activities', 'detail-activities', trip.activities);
+      setupCard('card-items', 'detail-items', trip.includedItems);
+
+      // 5. Configurar o card de pagamento separadamente (pois tem o cabeçalho de valor base)
+      const paymentCard = document.getElementById('card-payment');
+      if ((trip.paymentInfo && trip.paymentInfo.trim() !== '') || trip.price) {
+        paymentCard.style.display = 'block';
+        setupCard('card-payment-list', 'detail-payment', trip.paymentInfo);
+      } else {
+        paymentCard.style.display = 'none';
+      }
     }
 
     function showError() {
