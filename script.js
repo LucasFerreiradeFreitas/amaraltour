@@ -53,6 +53,44 @@ document.querySelectorAll(".trip-card").forEach((card) => {
   observer.observe(card);
 });
 
+// ─── Parser de data em português → ISO (YYYY-MM-DD) ───
+const MONTHS_PT = {
+  janeiro: "01",
+  fevereiro: "02",
+  março: "03",
+  marco: "03",
+  abril: "04",
+  maio: "05",
+  junho: "06",
+  julho: "07",
+  agosto: "08",
+  setembro: "09",
+  outubro: "10",
+  novembro: "11",
+  dezembro: "12",
+};
+
+function parseDateISO(dateStr) {
+  if (!dateStr) return "";
+  const lower = dateStr
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+  const dayMatch = lower.match(/\b(\d{1,2})\b/);
+  const day = dayMatch ? dayMatch[1].padStart(2, "0") : "01";
+  let month = "";
+  for (const [name, num] of Object.entries(MONTHS_PT)) {
+    if (lower.includes(name)) {
+      month = num;
+      break;
+    }
+  }
+  const yearMatch = lower.match(/\b(20\d{2})\b/);
+  const year = yearMatch ? yearMatch[1] : new Date().getFullYear().toString();
+  if (!month) return "";
+  return `${year}-${month}-${day}`;
+}
+
 // ─── Carrega viagens da nuvem (Netlify Function → Blobs) ───
 async function loadTripsFromStorage() {
   try {
@@ -65,9 +103,10 @@ async function loadTripsFromStorage() {
 
     if (Array.isArray(trips) && trips.length > 0) {
       // Ordena por data: mais próxima primeiro
+      // Usa dateISO se disponível, senão parseia o campo date em português
       trips.sort((a, b) => {
-        const da = a.dateISO || "";
-        const db = b.dateISO || "";
+        const da = a.dateISO || parseDateISO(a.date) || "";
+        const db = b.dateISO || parseDateISO(b.date) || "";
         if (!da && !db) return 0;
         if (!da) return 1;
         if (!db) return -1;
