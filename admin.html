@@ -417,7 +417,8 @@
 
         <div class="form-group">
           <label>Data *</label>
-          <input type="text" id="date" placeholder="Ex: 20 a 24 de Junho de 2026" required />
+          <input type="text" id="date" placeholder="Ex: 20 a 24 de Junho de 2026" required oninput="updateDateISO(this.value)" />
+          <input type="hidden" id="dateISO" />
         </div>
 
         <div class="form-group">
@@ -668,6 +669,7 @@
       document.getElementById('modal-title').textContent = 'Editar Viagem';
       document.getElementById('title').value = trip.title;
       document.getElementById('date').value = trip.date;
+      document.getElementById('dateISO').value = trip.dateISO || parseDateISO(trip.date);
       document.getElementById('description').value = trip.description;
       document.getElementById('status').value = trip.status;
 
@@ -684,6 +686,36 @@
       document.getElementById('paymentInfo').value = trip.paymentInfo || '';
 
       document.getElementById('trip-modal').classList.add('active');
+    }
+
+    // ─── Parsing de data em português → ISO (YYYY-MM-DD) ───
+    const MONTHS_PT = {
+      janeiro: '01', fevereiro: '02', março: '03', marco: '03',
+      abril: '04', maio: '05', junho: '06', julho: '07',
+      agosto: '08', setembro: '09', outubro: '10',
+      novembro: '11', dezembro: '12'
+    };
+
+    function parseDateISO(dateStr) {
+      if (!dateStr) return '';
+      const lower = dateStr.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      // Extrai o primeiro número de dia encontrado
+      const dayMatch = lower.match(/\b(\d{1,2})\b/);
+      const day = dayMatch ? dayMatch[1].padStart(2, '0') : '01';
+      // Extrai mês
+      let month = '';
+      for (const [name, num] of Object.entries(MONTHS_PT)) {
+        if (lower.includes(name)) { month = num; break; }
+      }
+      // Extrai ano
+      const yearMatch = lower.match(/\b(20\d{2})\b/);
+      const year = yearMatch ? yearMatch[1] : new Date().getFullYear().toString();
+      if (!month) return '';
+      return `${year}-${month}-${day}`;
+    }
+
+    function updateDateISO(value) {
+      document.getElementById('dateISO').value = parseDateISO(value);
     }
 
     function closeModal() {
@@ -747,6 +779,7 @@
         id: editingId || Date.now().toString(),
         title: document.getElementById('title').value,
         date: document.getElementById('date').value,
+        dateISO: document.getElementById('dateISO').value || parseDateISO(document.getElementById('date').value),
         description: document.getElementById('description').value,
         image: imageValue,
         status: document.getElementById('status').value,

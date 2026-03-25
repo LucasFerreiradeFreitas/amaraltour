@@ -64,6 +64,15 @@ async function loadTripsFromStorage() {
     const trips = await response.json();
 
     if (Array.isArray(trips) && trips.length > 0) {
+      // Ordena por data: mais próxima primeiro
+      trips.sort((a, b) => {
+        const da = a.dateISO || "";
+        const db = b.dateISO || "";
+        if (!da && !db) return 0;
+        if (!da) return 1;
+        if (!db) return -1;
+        return da.localeCompare(db);
+      });
       renderDynamicTrips(trips);
     }
   } catch (error) {
