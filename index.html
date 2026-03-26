@@ -12,7 +12,10 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
 
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="styles.css">
+  </noscript>
   <meta name="google-site-verification" content="cxSrtbVW63GMSrrSp4rv_laUizXuSkfkemQC50tKWfI" />
 
   <!-- Para index.html -->
@@ -25,7 +28,7 @@
   <!-- Open Graph para redes sociais -->
   <meta property="og:title" content="Amaraltour - Agência de Viagens em Recife | Excursões e Pacotes Nordeste">
   <meta property="og:description" content="Excursões e pacotes turísticos saindo de Recife. Maragogi, Pipa, Rio de Janeiro, São João e mais de 25 roteiros. +2500 clientes satisfeitos. Reserve já!">
-  <meta property="og:image" content="https://amaraltour.netlify.app/imgs/logo.png">
+  <meta property="og:image" content="https://amaraltour.netlify.app/imgs/logo.webp.webp">
   <meta property="og:url" content="https://amaraltour.netlify.app">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
@@ -35,7 +38,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Amaraltour - Agência de Viagens em Recife">
   <meta name="twitter:description" content="Excursões e pacotes turísticos saindo de Recife. +500 viagens realizadas. Reserve já!">
-  <meta name="twitter:image" content="https://amaraltour.netlify.app/imgs/logo.png">
+  <meta name="twitter:image" content="https://amaraltour.netlify.app/imgs/logo.webp.webp">
 </head>
 
 <body>
@@ -43,7 +46,7 @@
     <div class="container">
       <div class="header-content">
         <a href="index.html" class="logo">
-          <img src="imgs/logo.png" alt="Amaraltour Logo" width="150">
+          <img src="imgs/logo.webp.webp" alt="Amaraltour Logo" width="150" height="69">
         </a>
 
         <button class="mobile-menu-btn" id="mobileMenuBtn">
