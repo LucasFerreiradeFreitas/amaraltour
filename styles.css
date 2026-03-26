@@ -10,7 +10,6 @@ html {
 }
 
 :root {
-  /* Paleta de cores atualizada para Mostarda e Marrom */
   --color-primary: #d4af37; /* Amarelo Mostarda */
   --color-primary-dark: #b8860b; /* Mostarda Escuro */
   --color-secondary: #8b4513; /* Marrom */
@@ -141,7 +140,6 @@ body {
 
 /* Hero Section */
 .hero {
-  /* Gradiente atualizado de Mostarda para Marrom */
   background: linear-gradient(
     135deg,
     var(--color-primary) 0%,
@@ -174,17 +172,14 @@ body {
 
 /* Estilo para o Slogan no Hero Section */
 .hero-slogan {
-  font-size: 2.1rem; /* Um pouco menor que o subtítulo */
-  font-style: italic; /* Opcional: para dar um toque diferente */
-  margin-top: calc(
-    var(--spacing-lg) * -0.5
-  ); /* Aproxima um pouco do subtítulo */
-  margin-bottom: var(--spacing-lg); /* Espaço antes do botão */
-  opacity: 0.9; /* Levemente mais sutil que o subtítulo */
+  font-size: 2.1rem;
+  font-style: italic;
+  margin-top: calc(var(--spacing-lg) * -0.5);
+  margin-bottom: var(--spacing-lg);
+  opacity: 0.9;
   font-weight: 500;
 }
 
-/* Ajuste responsivo opcional */
 @media (max-width: 768px) {
   .hero-slogan {
     font-size: 1rem;
@@ -194,7 +189,7 @@ body {
 .btn-hero {
   display: inline-block;
   background-color: white;
-  color: var(--color-secondary); /* Cor do botão aponta para o marrom */
+  color: var(--color-secondary);
   padding: var(--spacing-md) var(--spacing-xl);
   border-radius: var(--radius);
   text-decoration: none;
@@ -273,7 +268,6 @@ body {
   transition:
     transform 0.3s,
     box-shadow 0.3s;
-  /* Faz o card usar flex-direction para empurrar o botão para baixo */
   display: flex;
   flex-direction: column;
 }
@@ -309,9 +303,7 @@ body {
 
 .trip-content {
   padding: var(--spacing-lg);
-  /* Faz o conteúdo crescer para preencher o espaço */
   flex-grow: 1;
-  /* Adicionado para espaçar o botão */
   display: flex;
   flex-direction: column;
 }
@@ -340,7 +332,6 @@ body {
   color: var(--color-text-light);
   margin-bottom: var(--spacing-lg);
   line-height: 1.6;
-  /* Faz a descrição preencher o espaço disponível */
   flex-grow: 1;
 }
 
@@ -361,7 +352,7 @@ body {
     background-color 0.3s,
     transform 0.2s;
   text-decoration: none;
-  margin-top: auto; /* Empurra o botão para o final do .trip-content */
+  margin-top: auto;
 }
 
 .btn-saiba-mais:hover {
@@ -374,7 +365,7 @@ body {
 
 /* Footer */
 .footer {
-  background-color: var(--color-text); /* Footer com fundo marrom escuro */
+  background-color: var(--color-text);
   color: white;
   padding: var(--spacing-2xl) 0 var(--spacing-lg);
 }
@@ -390,7 +381,7 @@ body {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: var(--spacing-md);
-  color: var(--color-primary); /* Título do footer em mostarda */
+  color: var(--color-primary);
 }
 
 .footer-subtitle {
@@ -418,7 +409,7 @@ body {
 }
 
 .footer-links a:hover {
-  color: var(--color-primary); /* Links do footer em mostarda no hover */
+  color: var(--color-primary);
 }
 
 .footer-links li {
@@ -438,7 +429,7 @@ body {
 }
 
 .social-links a:hover {
-  color: var(--color-primary); /* Links sociais em mostarda no hover */
+  color: var(--color-primary);
   transform: translateY(-2px);
 }
 
@@ -512,7 +503,7 @@ body {
 
 .trip-detail-page {
   padding: var(--spacing-2xl) 0;
-  background-color: #f0e5bd; /* Fundo creme/levemente amarelado */
+  background-color: #f0e5bd;
 }
 
 .trip-detail-header {
@@ -521,7 +512,7 @@ body {
 
 .trip-detail-header img {
   width: 100%;
-  height: 400px; /* Altura maior para a imagem de destaque */
+  height: 400px;
   object-fit: cover;
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
@@ -530,7 +521,7 @@ body {
 .trip-detail-header h1 {
   font-size: 2.5rem;
   font-weight: 800;
-  color: var(--color-text); /* Texto marrom escuro */
+  color: var(--color-text);
   margin-top: var(--spacing-lg);
   text-align: center;
 }
@@ -538,18 +529,17 @@ body {
 .trip-detail-content .intro {
   font-size: 1.25rem;
   text-align: center;
-  color: var(--color-text); /* Texto marrom claro */
+  color: var(--color-text);
   max-width: 800px;
   margin: 0 auto var(--spacing-xl);
 }
 
 .trip-info-grid {
   display: grid;
-  /* Ajustado para garantir que os cards fiquem em harmonia se houver 3 ou 4 deles */
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: var(--spacing-lg);
   margin-bottom: var(--spacing-xl);
-  align-items: stretch; /* Mantém os cards da mesma linha com a mesma altura */
+  align-items: stretch;
 }
 
 .info-card {
@@ -610,7 +600,7 @@ body {
 }
 
 .info-card ul::-webkit-scrollbar-track {
-  background: var(--color-surface); /* Fundo creme */
+  background: var(--color-surface);
   border-radius: 4px;
 }
 
@@ -619,7 +609,6 @@ body {
   border-radius: 4px;
 }
 
-/* Estilo de "bloco" para cada item da lista (cada Enter que você dá no painel) */
 .info-card li {
   color: var(--color-text-light);
   line-height: 1.6;
@@ -648,7 +637,7 @@ body {
 
 .packages-section {
   margin-bottom: var(--spacing-xl);
-  padding-top: var(--spacing-lg); /* Espaço para o link de âncora #pacotes */
+  padding-top: var(--spacing-lg);
 }
 
 .packages-section h2 {
@@ -680,18 +669,17 @@ body {
 }
 
 .package-card.package-popular {
-  border-color: var(--color-primary); /* Borda mostarda para o popular */
+  border-color: var(--color-primary);
   position: relative;
 }
 
-/* Criamos a faixa "Mais Popular" com CSS */
 .package-card.package-popular::before {
   content: "Mais Popular";
   position: absolute;
   top: -10px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--color-primary); /* Fundo mostarda */
+  background-color: var(--color-primary);
   color: white;
   padding: 4px var(--spacing-sm);
   border-radius: 999px;
@@ -714,7 +702,7 @@ body {
 .package-card .package-price {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--color-primary); /* Preço em mostarda */
+  color: var(--color-primary);
   margin-bottom: var(--spacing-md);
 }
 
@@ -761,7 +749,7 @@ body {
 
 .btn-reserve-detail {
   display: inline-block;
-  background-color: var(--color-secondary); /* Botão de reserva em marrom */
+  background-color: var(--color-secondary);
   color: white;
   padding: var(--spacing-md) var(--spacing-2xl);
   border-radius: var(--radius);
@@ -777,7 +765,7 @@ body {
 }
 
 .btn-reserve-detail:hover {
-  background-color: #6a360f; /* Marrom mais escuro no hover */
+  background-color: #6a360f;
   transform: translateY(-2px);
 }
 
@@ -790,11 +778,6 @@ body {
     font-size: 2rem;
   }
 }
-
-/* ============================================== */
-/* === Estilos Adicionais (Página Rio)      === */
-/* === ADICIONE ISSO AO FINAL DO SEU styles.css === */
-/* ============================================== */
 
 .tours-section {
   background-color: white;
@@ -813,10 +796,10 @@ body {
 }
 
 .tours-list {
-  list-style-type: decimal; /* 1, 2, 3... */
+  list-style-type: decimal;
   list-style-position: outside;
   margin: 0;
-  padding-left: var(--spacing-lg); /* Ajuste no padding */
+  padding-left: var(--spacing-lg);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
@@ -831,17 +814,16 @@ body {
 .tours-list li strong {
   color: var(--color-text);
   font-weight: 700;
-  display: block; /* Faz o título ficar na linha de cima */
+  display: block;
   margin-bottom: 4px;
 }
 
 /* Estilo para o card de aviso */
 .info-card.warning {
-  border-left-color: #f59e0b; /* Um tom de aviso (laranja/amarelo) */
-  background-color: #fffbeb; /* Fundo amarelo bem claro */
+  border-left-color: #f59e0b;
+  background-color: #fffbeb;
 }
 
-/* Estilo para o <p> dentro da seção de pagamento */
 .payment-section p {
   color: var(--color-text-light);
   margin-bottom: var(--spacing-lg);
@@ -855,101 +837,143 @@ body {
 /* === Estilos ATUALIZADOS para Tabelas de Preço === */
 /* ============================================== */
 
-/* Wrapper para permitir rolagem horizontal em telas pequenas */
 .table-wrapper {
-  overflow-x: auto; /* Mantém a rolagem horizontal */
+  overflow-x: auto;
   margin-bottom: var(--spacing-lg);
-  border-radius: var(--radius); /* Bordas arredondadas */
-  border: 1px solid var(--color-border); /* Borda sutil */
-  box-shadow: var(--shadow-sm); /* Sombra leve */
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
 }
 
 .payment-table {
   width: 100%;
-  min-width: 600px; /* Força a rolagem em telas menores, ajuste se necessário */
-  border-collapse: collapse; /* Remove espaços entre células */
-  background-color: white; /* Fundo branco para a tabela */
+  min-width: 600px;
+  border-collapse: collapse;
+  background-color: white;
 }
 
 .payment-table th,
 .payment-table td {
-  padding: var(--spacing-sm); /* Espaçamento interno das células */
-  border: 1px solid var(--color-border); /* Linhas de divisão sutis */
-  text-align: left; /* Alinhamento padrão à esquerda */
-  vertical-align: middle; /* Alinhamento vertical centralizado */
-  color: var(--color-text-light); /* Cor de texto padrão (marrom claro) */
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: middle;
+  color: var(--color-text-light);
 }
 
 /* Cabeçalho da Tabela */
 .payment-table thead th {
-  background-color: var(--color-surface); /* Fundo creme/levemente amarelado */
+  background-color: var(--color-surface);
   font-size: 0.875rem;
-  font-weight: 700; /* Mais forte */
-  color: var(--color-text); /* Texto marrom escuro */
-  white-space: nowrap; /* Evita quebra de linha no cabeçalho */
-  text-align: center; /* Centraliza cabeçalhos */
-  border-bottom: 2px solid var(--color-primary); /* Linha mostarda abaixo do cabeçalho */
+  font-weight: 700;
+  color: var(--color-text);
+  white-space: nowrap;
+  text-align: center;
+  border-bottom: 2px solid var(--color-primary);
 }
 
 /* Corpo da Tabela */
 .payment-table tbody tr:nth-child(even) {
-  background-color: var(
-    --color-surface
-  ); /* Listras sutis para melhor leitura */
+  background-color: var(--color-surface);
 }
 
 .payment-table tbody tr:hover {
-  background-color: rgba(
-    212,
-    175,
-    55,
-    0.1
-  ); /* Hover mostarda bem claro (cor --color-primary com transparência) */
+  background-color: rgba(212, 175, 55, 0.1);
 }
 
-/* Primeira coluna do corpo (descrição) */
 .payment-table tbody td:first-child {
   font-weight: 600;
-  color: var(--color-text); /* Marrom escuro */
+  color: var(--color-text);
 }
 
-/* Colunas de preço no corpo */
 .payment-table tbody td:nth-child(n + 3) {
-  /* Começando da terceira coluna */
-  text-align: center; /* Centraliza valores */
+  text-align: center;
   font-weight: 500;
 }
 
-/* Rodapé da Tabela */
 .payment-table tfoot {
   background-color: var(--color-surface);
   font-weight: 700;
   color: var(--color-text);
-  border-top: 2px solid var(--color-primary); /* Linha mostarda acima do rodapé */
+  border-top: 2px solid var(--color-primary);
 }
 
-/* Célula "TOTAL" no rodapé */
 .payment-table tfoot td[colspan="2"] {
   text-align: right;
   padding-right: var(--spacing-md);
 }
 
-/* Colunas de preço total no rodapé */
 .payment-table tfoot td:not(:first-child) {
-  color: var(--color-secondary); /* Usa o marrom secundário para os totais */
-  font-size: 1.1em; /* Destaca um pouco o total */
-  text-align: center; /* Centraliza totais */
+  color: var(--color-secondary);
+  font-size: 1.1em;
+  text-align: center;
 }
 
-/* Ajuste para tabelas mais simples (menos colunas) */
 .payment-table[style*="min-width: 300px"] td:nth-child(n + 2),
 .payment-table[style*="min-width: 500px"] td:nth-child(n + 2) {
   text-align: center;
   font-weight: 700;
-  color: var(--color-primary-dark); /* Mostarda escuro para valores */
+  color: var(--color-primary-dark);
 }
 
 .payment-table[style*="min-width: 300px"] tfoot td:not(:first-child),
 .payment-table[style*="min-width: 500px"] tfoot td:not(:first-child) {
-  color: var(--color-secondary); /* Marrom secundário para totais */
+  color: var(--color-secondary);
+}
+
+/* ─── Seção SEO ─── */
+.seo-section {
+  background-color: var(--color-surface);
+  padding: var(--spacing-2xl) 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.seo-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.seo-content > h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--spacing-md);
+}
+
+.seo-content > p {
+  color: var(--color-text-light);
+  line-height: 1.7;
+  margin-bottom: var(--spacing-lg);
+}
+
+.seo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.seo-item {
+  background: white;
+  border-radius: var(--radius);
+  padding: var(--spacing-md);
+  border: 1px solid var(--color-border);
+}
+
+.seo-item h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--spacing-sm);
+}
+
+.seo-item p {
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .seo-grid {
+    grid-template-columns: 1fr;
+  }
 }
