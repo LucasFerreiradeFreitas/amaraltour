@@ -93,7 +93,7 @@ function parseDateISO(dateStr) {
 
 // ─── Chave e tempo de expiração do cache ───
 const CACHE_KEY = "amaraltour_trips";
-const CACHE_DURATION_MS = 5 * 60 * 1000; 
+const CACHE_DURATION_MS = 5 * 60 * 1000; // 5 minutos em milissegundos
 
 // ─── Mostra esqueletos enquanto carrega ───
 function showSkeletons(count = 3) {
@@ -140,7 +140,7 @@ async function loadTripsFromStorage() {
 
   // 2. Cache expirado ou inexistente: busca na rede
   try {
-    const response = await fetch("/.netlify/functions/trips");
+    const response = await fetch(`/.netlify/functions/trips?t=${Date.now()}`);
 
     if (!response.ok) throw new Error("Erro " + response.status);
 
@@ -157,11 +157,15 @@ async function loadTripsFromStorage() {
         return da.localeCompare(db);
       });
 
-      // 3. Salva no cache com o horário atual
-      sessionStorage.setItem(
-        CACHE_KEY,
-        JSON.stringify({ timestamp: Date.now(), data: trips })
-      );
+      // 3. Tenta salvar no cache — se o storage estiver cheio, ignora e continua
+      try {
+        sessionStorage.setItem(
+          CACHE_KEY,
+          JSON.stringify({ timestamp: Date.now(), data: trips }),
+        );
+      } catch (storageError) {
+        console.warn("sessionStorage cheio, cache ignorado:", storageError);
+      }
 
       removeSkeletons();
       renderDynamicTrips(trips);
