@@ -91,11 +91,56 @@ function parseDateISO(dateStr) {
   return `${year}-${month}-${day}`;
 }
 
-// ─── Carrega viagens da nuvem (Netlify Function → Blobs) ───
+// ─── Chave e tempo de expiração do cache ───
+const CACHE_KEY = "amaraltour_trips";
+const CACHE_DURATION_MS = 5 * 60 * 1000; 
+
+// ─── Mostra esqueletos enquanto carrega ───
+function showSkeletons(count = 3) {
+  const tripsGrid = document.querySelector(".trips-grid");
+
+  for (let i = 0; i < count; i++) {
+    const skeleton = document.createElement("div");
+    skeleton.className = "trip-card skeleton-card";
+    skeleton.innerHTML = `
+      <div class="skeleton skeleton-image"></div>
+      <div class="trip-content">
+        <div class="skeleton skeleton-title"></div>
+        <div class="skeleton skeleton-text"></div>
+        <div class="skeleton skeleton-text short"></div>
+      </div>
+    `;
+    tripsGrid.appendChild(skeleton);
+  }
+}
+
+// ─── Remove os esqueletos ───
+function removeSkeletons() {
+  document.querySelectorAll(".skeleton-card").forEach((el) => el.remove());
+}
+
+// ─── Carrega viagens com cache no sessionStorage ───
 async function loadTripsFromStorage() {
+  showSkeletons(3);
+
+  // 1. Tenta ler do cache antes de ir para a rede
+  const cached = sessionStorage.getItem(CACHE_KEY);
+
+  if (cached) {
+    const { timestamp, data } = JSON.parse(cached);
+    const isExpired = Date.now() - timestamp > CACHE_DURATION_MS;
+
+    if (!isExpired) {
+      // Cache ainda válido: carrega na hora!
+      removeSkeletons();
+      renderDynamicTrips(data);
+      return; // Para aqui, sem buscar na rede
+    }
+  }
+
+  // 2. Cache expirado ou inexistente: busca na rede
   try {
-    // ALTERAÇÃO AQUI: Adicionamos ?t=${Date.now()} para evitar cache
-    const response = await fetch(`/.netlify/functions/trips?t=${Date.now()}`);
+    const response = await fetch("/.netlify/functions/trips");
 
     if (!response.ok) throw new Error("Erro " + response.status);
 
@@ -103,7 +148,6 @@ async function loadTripsFromStorage() {
 
     if (Array.isArray(trips) && trips.length > 0) {
       // Ordena por data: mais próxima primeiro
-      // Usa dateISO se disponível, senão parseia o campo date em português
       trips.sort((a, b) => {
         const da = a.dateISO || parseDateISO(a.date) || "";
         const db = b.dateISO || parseDateISO(b.date) || "";
@@ -112,10 +156,21 @@ async function loadTripsFromStorage() {
         if (!db) return -1;
         return da.localeCompare(db);
       });
+
+      // 3. Salva no cache com o horário atual
+      sessionStorage.setItem(
+        CACHE_KEY,
+        JSON.stringify({ timestamp: Date.now(), data: trips })
+      );
+
+      removeSkeletons();
       renderDynamicTrips(trips);
+    } else {
+      removeSkeletons();
     }
   } catch (error) {
     console.log("Não foi possível carregar viagens extras:", error);
+    removeSkeletons();
   }
 }
 
