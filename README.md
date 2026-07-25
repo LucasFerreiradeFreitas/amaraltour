@@ -173,9 +173,8 @@ Este projeto é privado e desenvolvido para uso exclusivo da Amaraltour.
 
 **Seu Nome**
 
-- GitHub: [@seu-usuario](https://github.com/seu-usuario)
-- LinkedIn: [Seu Nome](https://linkedin.com/in/seu-perfil)
-- Portfolio: [seusite.com](https://seusite.com)
+- GitHub: [@LucasFerreiradeFreitaso](https://github.com/LucasFerreiradeFreitas)
+- LinkedIn: [Seu Nome](https://linkedin.com/in/lucas-ferreira-freitas/)
 
 ## 🙏 Agradecimentos
 
