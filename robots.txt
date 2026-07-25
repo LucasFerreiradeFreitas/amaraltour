@@ -1,5 +1,94 @@
-User-agent: *
-Allow: /
-Disallow: /admin.html
+# 🌍 Amaraltour - Agência de Viagens
 
-Sitemap: https://amaraltour.netlify.app/sitemap.xml
+[![Netlify Status](https://api.netlify.com/api/v1/badges/seu-badge-id/deploy-status)](https://amaraltour.netlify.app)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
+![Vanilla JS](https://img.shields.io/badge/Vanilla_JS-F7DF1E?style=flat&logo=javascript&logoColor=black)
+
+> Website institucional premium e responsivo para agência de viagens, desenvolvido com arquitetura Vanilla modular, pipeline de build customizado e sistema de administração Serverless integrado.
+
+[🔗 Ver site ao vivo](https://amaraltour.netlify.app)
+
+## 🎯 Sobre o Projeto
+
+Plataforma desenvolvida para a Amaraltour, agência de viagens de Recife-PE. O foco do projeto foi entregar uma experiência de usuário (UX) de alto nível, interface limpa voltada para conversão e performance extrema, utilizando uma base tecnológica enxuta sem dependência de frameworks pesados.
+
+### ✨ Funcionalidades e UX/UI
+
+- 🎨 **Design System Moderno:** Interface premium inspirada em grandes players (Airbnb, Stripe) com paleta de cores corporativa, sombras fluidas e tipografia avançada (Inter).
+- 📱 **Mobile-First:** Layout totalmente responsivo utilizando metodologias modernas de CSS Grid e `clamp()` para tipografia fluida.
+- 🔐 **Dashboard Administrativo:** Painel de controle corporativo estilo *Single Page* com tabelas de dados dinâmicas, Toast Notifications e autenticação via Netlify Functions.
+- 📦 **Gestão Dinâmica:** Cadastro, edição e exclusão de roteiros turísticos utilizando Netlify Blobs como banco de dados NoSQL rápido.
+- ⚡ **Performance:** Pipeline de build automatizado (minificação de HTML, CSS e JS), lazy loading nativo e imagens modernas otimizadas.
+- 🔄 **Conversão:** Integração direta com WhatsApp mediante links parametrizados e gatilhos de escassez ("Vagas Limitadas").
+
+### 🛠️ Arquitetura e Tecnologias
+
+A arquitetura foi desenhada separando claramente o código fonte (`/css`, `/js`) do código de produção minificado (`/dist`).
+
+**Frontend Stack:**
+- HTML5 Semântico & Acessível (A11y)
+- CSS3 Modular (Variables, Reset, Layout, Components)
+- JavaScript ES6+ (Modules, Fetch API, Async/Await)
+
+**Backend & Infraestrutura:**
+- Netlify (Edge Hosting)
+- Netlify Functions (Serverless Node.js para Autenticação e API)
+- Netlify Blobs (Armazenamento de Dados JSON)
+
+**Build Pipeline (NPM Scripts):**
+- `terser` (Minificação JS)
+- `clean-css-cli` (Minificação CSS)
+- `html-minifier-terser` (Minificação HTML)
+- `copyfiles` (Gestão de diretórios de distribuição)
+
+## 📁 Estrutura de Diretórios
+
+```text
+amaraltour/
+├── css/                  # Código-fonte CSS Modular (Variables, Layout, Components)
+├── js/                   # Código-fonte JavaScript Modular (API, Main, Admin)
+├── paginas-informacoes/  # Rotas secundárias (Sobre nós, etc)
+├── netlify/
+│   └── functions/        # Backend Serverless (Auth, Trips API)
+├── index.html            # Landing Page Source
+├── admin.html            # Dashboard Source
+├── package.json          # Configuração de dependências e NPM Scripts de Build
+└── netlify.toml          # Configurações de Deploy, Cache Headers e Build Command
+
+(Nota: A pasta /dist/ é gerada automaticamente durante o processo de build e serve os arquivos de produção minificados).
+
+🚀 Como Executar Localmente
+Pré-requisitos:
+
+- Node.js (v18+)
+- NPM
+
+Instalação e Testes
+1. Clone o repositório:
+
+git clone [https://github.com/LucasFerreiradeFreitas/amaraltour.git](https://github.com/LucasFerreiradeFreitas/amaraltour.git)
+cd amaraltour
+
+1. Instale as dependências de desenvolvimento (Build Tools):
+
+npm install
+
+1. Gere o Build de Produção (Cria a pasta /dist minificada):
+
+npm run build
+
+1. Sirva os arquivos de produção para teste:
+
+npx serve dist
+
+(Para testar as requisições à API, utilize o netlify dev na raiz do projeto).
+
+🌐 Deploy Contínuo
+O projeto possui CI/CD configurado nativamente com o Netlify. Ao realizar um push para a branch main, o servidor executa o comando npm run build e publica o conteúdo da pasta dist. Políticas de cache agressivas (Cache-Control) estão configuradas no netlify.toml para assets estáticos.
+
+👤 Autor
+Lucas Ferreira Freitas
+
+- Desenvolvedor Front-End
+- GitHub: @LucasFerreiradeFreitas

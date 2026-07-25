@@ -1,5 +1,19 @@
 {
   "dependencies": {
     "@netlify/blobs": "^7.0.0"
+  },
+  "devDependencies": {
+    "clean-css-cli": "^5.6.3",
+    "copyfiles": "^2.4.1",
+    "html-minifier-terser": "^7.2.0",
+    "terser": "^5.31.0"
+  },
+  "scripts": {
+    "prebuild": "copyfiles -u 0 css/**/* js/**/* imgs/**/* assets/**/* paginas-informacoes/**/*.html admin.html robots.txt sitemap.xml site.webmanifest dist/",
+    "build:css": "cleancss -o dist/css/variables.css css/variables.css && cleancss -o dist/css/reset.css css/reset.css && cleancss -o dist/css/layout.css css/layout.css && cleancss -o dist/css/components.css css/components.css",
+    "build:css-extras": "cleancss -o dist/css/admin.css css/admin.css && cleancss -o dist/css/trip-details.css css/trip-details.css",
+    "build:js": "terser js/main.js -o dist/js/main.js -c -m && terser js/admin.js -o dist/js/admin.js -c -m && terser js/trip-details.js -o dist/js/trip-details.js -c -m",
+    "build:html": "html-minifier-terser --collapse-whitespace --remove-comments index.html -o dist/index.html",
+    "build": "npm run prebuild && npm run build:css && npm run build:css-extras && npm run build:js && npm run build:html"
   }
 }

@@ -20,9 +20,9 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#ff3616",
-  "background_color": "#ffffff",
+  "theme_color": "#D97706",
+  "background_color": "#F8FAFC",
   "display": "standalone",
-  "description": "Experiências únicas, pacotes personalizados e momentos inesquecíveis",
+  "description": "Experiências únicas, pacotes personalizados e momentos inesquecíveis pelo Nordeste.",
   "start_url": "/"
 }

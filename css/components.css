@@ -1,0 +1,170 @@
+/* css/components.css */
+
+/* --- Botões (Buttons) --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Tamanhos */
+.btn {
+  padding: 0.625rem 1.25rem; /* Base */
+  font-size: 0.95rem;
+}
+
+.btn-lg {
+  padding: 0.875rem 1.75rem; /* Grande (Hero) */
+  font-size: 1.05rem;
+  border-radius: var(--radius-lg);
+}
+
+/* Variantes de Cor */
+.btn-primary {
+  background-color: var(--color-brand-secondary);
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  background-color: #b45309; /* Mostarda levemente mais escuro no hover */
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-brand-primary);
+  border: 1px solid var(--color-border);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-bg-default);
+  border-color: #cbd5e1;
+}
+
+/* --- Badges --- */
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-brand-secondary);
+  background-color: #eff6ff; /* Fundo azul bem claro */
+  border-radius: var(--radius-pill);
+}
+
+.badge-success {
+  background-color: var(--color-success-bg);
+  color: #065f46; /* Verde escuro para contraste */
+}
+
+/* --- Card de Viagem --- */
+.trip-card {
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-fast);
+  height: 100%;
+}
+
+.trip-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Container da Imagem com Efeito de Zoom */
+.trip-image-wrapper {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.trip-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.trip-card:hover .trip-image-wrapper img {
+  transform: scale(1.05); /* Zoom sutil na imagem no hover */
+}
+
+/* Badge Flutuante de Status */
+.trip-badge {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  background-color: var(--color-success);
+  color: #ffffff;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+  z-index: 10;
+}
+
+.trip-badge.esgotado {
+  background-color: #ef4444; /* Vermelho para esgotado */
+}
+
+/* Conteúdo do Card */
+.trip-content {
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.trip-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-brand-primary);
+  margin-bottom: var(--spacing-xs);
+  line-height: 1.3;
+}
+
+.trip-date {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  color: var(--color-brand-secondary);
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+}
+
+.trip-description {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: var(--spacing-lg);
+  flex-grow: 1; /* Empurra o botão para a base */
+
+  /* Trunca o texto em 3 linhas para manter os cards alinhados */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* O botão do card reaproveita o .btn-primary que já criamos */
+.trip-card .btn {
+  width: 100%; /* Botão ocupando toda a largura no mobile/desktop */
+}
