@@ -10,7 +10,8 @@ const loginBtn = document.getElementById("loginBtn");
 if (loginBtn) {
   loginBtn.addEventListener("click", async function (e) {
     e.preventDefault();
-    const password = document.getElementById("adminPassword").value;
+    // O .trim() remove qualquer espaço invisível antes ou depois da senha
+    const password = document.getElementById("adminPassword").value.trim();
     const errorMsg = document.getElementById("loginError");
 
     if (!password) {
@@ -19,45 +20,38 @@ if (loginBtn) {
       return;
     }
 
-    // Feedback visual de carregamento
     const originalText = loginBtn.innerText;
     loginBtn.innerText = "Verificando...";
     loginBtn.disabled = true;
 
     try {
-      // Faz a requisição POST para a sua função auth.js no Netlify
       const response = await fetch("/.netlify/functions/auth", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
       });
 
-      const data = await response.json();
+      // Pega a resposta do servidor com segurança
+      let data = {};
+      try {
+        data = await response.json();
+      } catch (err) {}
 
-      // Se o backend retornar statusCode 200 e authenticated: true
       if (response.ok && data.authenticated) {
         errorMsg.style.display = "none";
-
-        // Faz a transição de tela
         document.getElementById("login-screen").style.display = "none";
         document.getElementById("admin-panel").style.display = "flex";
-
         showToast("Bem-vindo ao painel da Amaraltour!", "success");
-
-        // Carrega as viagens da sua função de Blobs
-        // loadTrips(); // Certifique-se de que esta função está implementada para chamar a API de viagens
         renderTrips();
       } else {
-        // Se a senha estiver errada (statusCode 401)
-        errorMsg.innerText = "Senha incorreta!";
+        // AGORA ELE VAI MOSTRAR O ERRO REAL NA TELA (Ex: 401, 404, 500)
+        errorMsg.innerText = `Erro ${response.status}: ${data.message || "Falha no servidor"}`;
         errorMsg.style.display = "block";
       }
     } catch (error) {
-      console.error("Erro no login:", error);
-      errorMsg.innerText = "Erro ao conectar com o servidor.";
+      errorMsg.innerText = "Erro de conexão (API offline)";
       errorMsg.style.display = "block";
     } finally {
-      // Restaura o botão
       loginBtn.innerText = originalText;
       loginBtn.disabled = false;
     }
