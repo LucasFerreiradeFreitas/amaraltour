@@ -123,28 +123,29 @@ if (tripForm) {
   tripForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    const title = document.getElementById("title").value;
-    const status = document.getElementById("status").value;
-
-    // Cria o objeto da viagem (você pode adicionar os campos de data e preço aqui depois)
+    // Pega TODOS os campos do novo formulário
     const tripData = {
-      id: editingTripId || Date.now().toString(), // Gera ID único se for nova
-      title: title,
-      status: status,
-      date: new Date().toLocaleDateString("pt-BR"), // Data provisória
+      id: editingTripId || Date.now().toString(),
+      title: document.getElementById("title").value,
+      status: document.getElementById("status").value,
+      date: document.getElementById("date").value,
+      price: document.getElementById("price").value,
+      image: document.getElementById("image").value,
+      description: document.getElementById("description").value,
+      boardingInfo: document.getElementById("boardingInfo").value,
+      activities: document.getElementById("activities").value,
+      includedItems: document.getElementById("includedItems").value,
     };
 
     if (editingTripId) {
-      // Atualiza a viagem existente
       const index = trips.findIndex((t) => t.id === editingTripId);
       if (index !== -1) trips[index] = { ...trips[index], ...tripData };
     } else {
-      // Adiciona a nova viagem
       trips.push(tripData);
     }
 
     try {
-      await syncTrips(); // Salva no Netlify
+      await syncTrips(); // Salva no Netlify Blobs
       showToast("Viagem salva com sucesso!", "success");
       closeModal();
       renderTrips();
@@ -159,18 +160,23 @@ window.editTrip = function (id) {
   const trip = trips.find((t) => t.id === id);
   if (!trip) return;
 
-  editingTripId = id; // Marca que estamos editando
+  editingTripId = id;
 
   const modal = document.getElementById("trip-modal");
   if (modal) modal.style.display = "flex";
 
   document.getElementById("modal-title").innerText = "Editar Viagem";
 
-  // Preenche os campos atuais no modal
-  const titleInput = document.getElementById("title");
-  const statusInput = document.getElementById("status");
-  if (titleInput) titleInput.value = trip.title;
-  if (statusInput) statusInput.value = trip.status;
+  // Preenche todos os campos com os dados da viagem selecionada
+  document.getElementById("title").value = trip.title || "";
+  document.getElementById("status").value = trip.status || "available";
+  document.getElementById("date").value = trip.date || "";
+  document.getElementById("price").value = trip.price || "";
+  document.getElementById("image").value = trip.image || "";
+  document.getElementById("description").value = trip.description || "";
+  document.getElementById("boardingInfo").value = trip.boardingInfo || "";
+  document.getElementById("activities").value = trip.activities || "";
+  document.getElementById("includedItems").value = trip.includedItems || "";
 };
 
 window.deleteTrip = async function (id) {
